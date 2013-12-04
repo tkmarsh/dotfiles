@@ -1,0 +1,14 @@
+[alias]
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
+	stash-unapply = !git stash show -p | git apply -R
+[user]
+	name = Lee Skillen
+	email = lskillen@vulcanft.com
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[push]
+	default = simple
