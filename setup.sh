@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-python symlink.py
+DIR=$(dirname "$(readlink -f "$0")")
+python $DIR/symlink.py
