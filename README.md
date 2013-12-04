@@ -1,4 +1,0 @@
-dotfiles
-========
-
-Linux dotfiles setup
