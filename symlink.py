@@ -25,27 +25,32 @@
 import errno
 import os
 import shutil
+import sys
 
-home_dir = os.environ["HOME"] + '/'
+home_dir = os.environ["HOME"]
+
 # Name of the directory where dotfiles are located.
-dotfiles_dir = home_dir + ".files/"
-# List of things we should ignore in the dotfiles directory.
-ignore = [".git", "LICENSE", "README.md", "setup.sh", "symlink.py", "symlink.pyc"]
+dotfiles_dir = os.path.dirname (os.path.realpath (__file__))
+
 # Name of the directory where already-existing dotfiles should be moved.
-backup_dir = home_dir + ".files-backup/"
+backup_dir = os.path.join (dotfiles_dir, "backup")
+
+# List of things we should ignore in the dotfiles directory.
+ignore = [".git", "backup", "LICENSE", "README.md", "setup.sh", "symlink.py", "symlink.pyc"]
 
 # Create backup directory if needed.
 try:
     os.mkdir(backup_dir)
-    print "Backup directory %s created." % backup_dir
+    print "Backup directory {} created.".format(backup_dir)
 except OSError as backup_creation_err:
     if backup_creation_err.errno == errno.EEXIST:
-        print "Backup directory %s already exists." % backup_dir
+        print "Backup directory {} already exists.".format(backup_dir)
     else:
         raise
 
 # Generate a list of dotfiles from $dotfiles that we will need to link.
 dotfiles = os.listdir(dotfiles_dir)
+
 # For each file/directory in this list, attempt to symlink to the
 # home directory.
 for filename in dotfiles:
@@ -54,27 +59,29 @@ for filename in dotfiles:
 
     # Add dots to dotfile names.
     dotfile = '.' + filename
+    srcpath = os.path.join(dotfiles_dir, filename)
+    dstpath = os.path.join(home_dir, dotfile)
+    bakpath = os.path.join(backup_dir, dotfile)
 
     # Assume that this is a directory and try to create a symlink.
     try:
-        os.symlink(dotfiles_dir + filename, home_dir + dotfile)
-        print "Linked %s to %s." % (dotfiles_dir + filename, home_dir + dotfile)
+        os.symlink(srcpath, dstpath)
+        print "Linked {} to {}.".format(srcpath, dstpath)
     except OSError as link_err:
         if link_err.errno == errno.EEXIST:
             # Check to see if this is a symlink, which means it has
             # already been copied.
-            if os.path.islink(home_dir + dotfile):
-                print "%s is a symlink already so unlinking first." % (home_dir + dotfile)
-                os.unlink(home_dir + dotfile)
+            if os.path.islink(dstpath):
+                print "{} is a symlink already so unlinking first.".format(dstpath)
+                os.unlink(dstpath)
             else:
                 # This file already exists in the home directory,
                 # so we move the old file to the backup directory.
-                print "%s already exists in %s." % (dotfile, home_dir)
-                shutil.move(home_dir + dotfile, backup_dir + dotfile)
-                print "Moved %s to %s" % (dotfile, backup_dir)
+                print "{} already exists in {}.".format(dotfile, home_dir)
+                shutil.move(dstpath, bakpath)
+                print "Moved {} to {}".format(dotfile, backup_dir)
 
-            os.symlink(dotfiles_dir + filename, home_dir + dotfile)
-            print "Linked %s to %s." % (dotfiles_dir + filename,
-                                        home_dir + dotfile)
+            os.symlink(srcpath, dstpath)
+            print "Linked {} to {}.".format(srcpath, dstpath)
         else:
             raise
