@@ -101,9 +101,9 @@ let g:syntastic_warning_symbol = '!'
 
 let g:Powerline_symbols = 'fancy'
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 nnoremap <leader>e :Errors<CR>
 

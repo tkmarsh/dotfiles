@@ -13,5 +13,9 @@ set -o vi
 export LD_LIBRARY_PATH=$LIB_X86:$LIB_LOCAL:$LIB_OPENMAMA
 export EDITOR=vim
 
-bash ~/.xinitrc
+cmd_exists () {
+    type "$1" &> /dev/null ;
+}
+
+. ~/.xinitrc
 

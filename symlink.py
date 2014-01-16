@@ -35,6 +35,8 @@ dotfiles_dir = os.path.dirname (os.path.realpath (__file__))
 # Name of the directory where already-existing dotfiles should be moved.
 backup_dir = os.path.join (dotfiles_dir, "backup")
 
+print backup_dir
+
 # List of things we should ignore in the dotfiles directory.
 ignore = [".git", "backup", "LICENSE", "README.md", "setup.sh", "symlink.py", "symlink.pyc"]
 
