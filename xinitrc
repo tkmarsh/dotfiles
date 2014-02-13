@@ -1,8 +1,6 @@
 
-
-
 if cmd_exists xrdb ; then
-    xrdb -merge ~/.Xresources
+    test "$DISPLAY" != "" && xrdb -merge ~/.Xresources
 fi
 
 if cmd_exists autocutsell ; then
