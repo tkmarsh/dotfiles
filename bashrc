@@ -17,5 +17,5 @@ cmd_exists () {
     type "$1" &> /dev/null ;
 }
 
-bash ~/.xinitrc
-bash ~/.bash_aliases
+. ~/.xinitrc
+. ~/.bash_aliases
