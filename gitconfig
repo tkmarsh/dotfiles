@@ -3,12 +3,31 @@
 	last = log -1 HEAD
 	visual = !gitk
 	stash-unapply = !git stash show -p | git apply -R
+[apply]
+    whitespace = fix
 [user]
 	name = Lee Skillen
 	email = lskillen@vulcanft.com
 [core]
 	editor = vim
 [merge]
-	tool = vimdiff
+	tool = kdiff3
 [push]
 	default = simple
+[format]
+    headers = "Organization: Vulcan Financial Technologies\n"
+    numbered = auto
+    signoff = true
+    coverletter = auto
+    keepsubject = true
+[sendemail]
+    confirm = always
+    smtpencryption = tls
+    smtpserver = smtp.gmail.com
+    smtpuser = lskillen@vulcanft.com
+    smtpserverport = 587
+    smtpsslcertpath = /etc/ssl/certs/ca-bundle.trust.crt
+    suppresscc = self
+    attachcopy = true
+    attachcopyencoding = base64
+

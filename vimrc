@@ -11,12 +11,13 @@ call vundle#rc()
 " vundle
 Bundle 'gmarik/vundle'
 
-"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 "Bundle 'Lokaltog/vim-powerline'
-Bundle 'ashwin/vim-powerline'
+Bundle 'Lokaltog/powerline'
+"Bundle 'ashwin/vim-powerline'
 Bundle 'octol/vim-cpp-enhanced-highlight'
 
 " repos
@@ -28,6 +29,8 @@ Bundle 'Lokaltog/vim-easymotion'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
 " non git-hub repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -57,7 +60,7 @@ set foldmethod=syntax          " Fold based on indentation
 set foldnestmax=3              " Deepest fold is 3 levels
 set nofoldenable               " Don't fold by default
 
-"set ttyfast                    " Smoother changes
+set ttyfast                    " Smoother changes
 set wildmenu                   " Enhanced command line completion
 set hidden                     " Handle multiple buffers better.
 set title                      " Set the terminals title
@@ -69,6 +72,7 @@ set novisualbell noerrorbells  " Turn bells off
 set scrolloff=4                " Keep cursor <n> characters away from top/bottom
 set sidescrolloff=7            " Keep cursor <n> characters away from left/right
 set history=1000               " Store 1000 commands in history buffer
+set mouse=a                    " XTerm-style mouse (make selections easier)
 
 set ls=2                       " Always show status line
 "set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
@@ -92,12 +96,14 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_min_num_of_chars_for_completion = 2
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_register_as_syntastic_checker = 1
 
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_jump=0
+let g:syntastic_enable_signs = 1
+let g:syntastic_auto_jump = 0
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
+let g:syntastic_enable_highlighting = 0
 
 let g:Powerline_symbols = 'fancy'
 
