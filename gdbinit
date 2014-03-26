@@ -7,7 +7,7 @@ set demangle-style gnu-v3
 
 python
 import sys
-sys.path.insert(0, '/home/leeskillen/.gdb/python')
+sys.path.insert(0, '/home/lskillen/.gdb/python')
 from libstdcxx.v6.printers import register_libstdcxx_printers
 register_libstdcxx_printers (None)
 end

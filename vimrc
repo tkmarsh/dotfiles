@@ -72,7 +72,7 @@ set novisualbell noerrorbells  " Turn bells off
 set scrolloff=4                " Keep cursor <n> characters away from top/bottom
 set sidescrolloff=7            " Keep cursor <n> characters away from left/right
 set history=1000               " Store 1000 commands in history buffer
-set mouse=a                    " XTerm-style mouse (make selections easier)
+"set mouse=a                    " XTerm-style mouse (make selections easier)
 
 set ls=2                       " Always show status line
 "set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
