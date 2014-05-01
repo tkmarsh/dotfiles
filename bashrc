@@ -125,9 +125,9 @@ set -o vi
 
 export PATH="$HOME/.local/bin:$SCAN_BUILD_PATH:$SCAN_VIEW_PATH:$PATH"
 export CLASSPATH=".:/usr/local/lib/antlr-4.1-complete.jar:$CLASSPATH"
-export LD_LIBRARY_PATH=$LIB_X86:$LIB_LOCAL:$LIB_OPENMAMA:$LIB_VULCAN
+export LD_LIBRARY_PATH="$LIB_X86:$LIB_LOCAL:$LIB_OPENMAMA:$LIB_VULCAN:$LD_LIBRARY_PATH"
 export EDITOR=vim
 
-if [ -f ~/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh ]; then
-    source ~/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
+if [ -f ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh ]; then
+    source ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 fi
