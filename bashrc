@@ -131,3 +131,5 @@ export EDITOR=vim
 if [ -f ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh ]; then
     source ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 fi
+
+export PYTHONDONTWRITEBYTECODE=1
