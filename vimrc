@@ -2,7 +2,7 @@ set nocompatible               " Disable VI compatibility
 filetype off
 
 set rtp+=~/.vim/vundle/
-call vundle#rc()
+call vundle#begin()
 
 " Package install: 
 " VIM: :PluginInstall
