@@ -12,8 +12,6 @@
 	editor = vim
 [merge]
 	tool = kdiff3
-[push]
-	default = simple
 [format]
     headers = "Organization: Vulcan Financial Technologies\n"
     numbered = auto
