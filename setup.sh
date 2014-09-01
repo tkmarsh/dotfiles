@@ -3,7 +3,7 @@ SELF=$BASH_SOURCE
 DIR=$(dirname "$(readlink -f "$SELF")")
 python $DIR/symlink.py
 
-pushd `pwd`
+pushd `pwd` &>/dev/null
 
 cd
 mkdir -p .vim
@@ -30,14 +30,32 @@ else
     cd
 fi
 
-if [[ ! -e .vim/colors/Tomorrow.vim ]]
+echo "Symlinking Tomorrow Night Theme (vim) ..."
+mkdir -p .vim/colors
+find tomorrow-theme/vim/colors/ -name '*.vim' -exec sh -c 'ln -fs $(readlink -f {}) .vim/colors/$(basename {})' \;
+
+which fc-cache &>/dev/null
+if [[ $? -eq 0 ]]
 then
-    echo "Symlinking Tomorrow Night Theme (vim) ..."
-    mkdir -p .vim/colors
-    find tomorrow-theme/vim/colors/ -name '*.vim' -exec sh -c 'ln -fs $(readlink -f {}) .vim/colors/$(basename {})' \;
+    echo "Setting up powerline fonts ..."
+    mkdir -p .fonts/
+    mkdir -p .config/fontconfig/conf.d
+    cd .fonts
+    if [[ ! -e PowerlineSymbols.otf ]]
+    then
+        wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf
+    fi
+    cd ../.config/fontconfig/conf.d/
+    if [[ ! -e 10-powerline-symbols.conf ]]
+    then
+        wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf
+    fi
+    fc-cache -vf ~/.fonts/
+else
+    echo "Cannot setup powerline fonts because fontconfig isn't installed!"
 fi
 
 echo "Executing Vundle plugin installation ..."
 vim +PluginInstall +qall
 
-popd
+popd &>/dev/null

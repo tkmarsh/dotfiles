@@ -129,8 +129,8 @@ export LD_LIBRARY_PATH="$LIB_X86:$LIB_LOCAL:$LIB_OPENMAMA:$LIB_VULCAN:$LD_LIBRAR
 export EDITOR=vim
 
 if [ -f ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh ]; then
-    source ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
     PATH=~/.vim/bundle/powerline/scripts:$PATH
+    source ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 fi
 
 export PYTHONDONTWRITEBYTECODE=1
