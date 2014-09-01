@@ -1,18 +1,18 @@
 set nocompatible               " Disable VI compatibility
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/vundle/
 call vundle#rc()
 
 " Package install: 
-" VIM: :BundleInstall
-" CLI: vim +BundleInstall +qall
+" VIM: :PluginInstall
+" CLI: vim +PluginInstall +qall
 
 " Vim Vundle Package Manager
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " Code Semantic Completion
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_min_num_of_chars_for_completion = 2
@@ -22,7 +22,7 @@ let g:ycm_register_as_syntastic_checker = 1
 let g:syntastic_python_checkers = ['flake8', 'pyflakes']
 
 " JIT Code Compilation
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 nnoremap <leader>e :Errors<CR>
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_jump = 0
@@ -32,36 +32,36 @@ let g:syntastic_warning_symbol = '!'
 let g:syntastic_enable_highlighting = 1
 
 " Intensely orgasmic commenting (their words, not mine)
-Bundle 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'
 
 " Vim-based Filesystem Explorer
 " See: :help NERD_Tree.txt
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 nnoremap <leader>n :NERDTreeToggle<CR>
 
 " Powerline Status Bar
-Bundle 'Lokaltog/powerline'
+Plugin 'Lokaltog/powerline'
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'
 
 " C++11 Enhanced Highlighting
-Bundle 'octol/vim-cpp-enhanced-highlight'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 
 " Fugitive - Git wrapper
 " :Gitedit :Gitdiff :Gitblame etc.
-Bundle 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 set statusline+=%{fugitive#statusline()}
 
 " EasyMotion - Easy text searching
 " <leader><leader><motion> (e.g. \\w for start of word search)
-Bundle 'Lokaltog/vim-easymotion'
+Plugin 'Lokaltog/vim-easymotion'
 map <Leader> <Plug>(easymotion-prefix)
 nmap s <Plug>(easymotion-s2)
 
 " Full path fuzzy file, buffer, mru, tag
 " See: :help ctrlp-commands
 " See: :help ctrlp.txt
-Bundle 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 
 filetype plugin indent on     " required!
 
@@ -146,38 +146,38 @@ vnoremap <C-H> :<C-U>Hexmode<CR>
 
 " helper function to toggle hex mode
 function ToggleHex()
-  " hex mode should be considered a read-only operation
-  " save values for modified and read-only for restoration later,
-  " and clear the read-only flag for now
-  let l:modified=&mod
-  let l:oldreadonly=&readonly
-  let &readonly=0
-  let l:oldmodifiable=&modifiable
-  let &modifiable=1
-  if !exists("b:editHex") || !b:editHex
-    " save old options
-    let b:oldft=&ft
-    let b:oldbin=&bin
-    " set new options
-    setlocal binary " make sure it overrides any textwidth, etc.
-    let &ft="xxd"
-    " set status
-    let b:editHex=1
-    " switch to hex editor
-    %!xxd
-  else
-    " restore old options
-    let &ft=b:oldft
-    if !b:oldbin
-      setlocal nobinary
+    " hex mode should be considered a read-only operation
+    " save values for modified and read-only for restoration later,
+    " and clear the read-only flag for now
+    let l:modified=&mod
+    let l:oldreadonly=&readonly
+    let &readonly=0
+    let l:oldmodifiable=&modifiable
+    let &modifiable=1
+    if !exists("b:editHex") || !b:editHex
+        " save old options
+        let b:oldft=&ft
+        let b:oldbin=&bin
+        " set new options
+        setlocal binary " make sure it overrides any textwidth, etc.
+        let &ft="xxd"
+        " set status
+        let b:editHex=1
+        " switch to hex editor
+        %!xxd
+    else
+        " restore old options
+        let &ft=b:oldft
+        if !b:oldbin
+            setlocal nobinary
+        endif
+        " set status
+        let b:editHex=0
+        " return to normal editing
+        %!xxd -r
     endif
-    " set status
-    let b:editHex=0
-    " return to normal editing
-    %!xxd -r
-  endif
-  " restore values for modified and read only state
-  let &mod=l:modified
-  let &readonly=l:oldreadonly
-  let &modifiable=l:oldmodifiable
+    " restore values for modified and read only state
+    let &mod=l:modified
+    let &readonly=l:oldreadonly
+    let &modifiable=l:oldmodifiable
 endfunction
