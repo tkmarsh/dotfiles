@@ -131,7 +131,7 @@ export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
 export PYTHONDONTWRITEBYTECODE=1
 
 if [ -f ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh ]; then
-    PATH=~/.vim/bundle/powerline/scripts:$PATH
+    export PATH=~/.vim/bundle/powerline/scripts:$PATH
     source ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 fi
 
