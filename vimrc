@@ -20,7 +20,7 @@ if v:version > 703 || v:version == 703 && has("patch584")
     let g:ycm_confirm_extra_conf = 0
     let g:ycm_seed_identifiers_with_syntax = 1
     let g:ycm_register_as_syntastic_checker = 1
-    let g:syntastic_python_checkers = ['flake8', 'pyflakes']
+    let g:syntastic_python_checkers = ['flake8']
 endif
 
 " JIT Code Compilation
@@ -64,6 +64,9 @@ nmap s <Plug>(easymotion-s2)
 " See: :help ctrlp-commands
 " See: :help ctrlp.txt
 Plugin 'kien/ctrlp.vim'
+
+" Gist support
+Bundle 'mattn/gist-vim'
 
 filetype plugin indent on     " required!
 

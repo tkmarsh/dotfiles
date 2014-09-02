@@ -10,6 +10,7 @@
 	email = lskillen@vulcanft.com
 [core]
 	editor = vim
+    whitespace = trailing-space, space-before-tab
 [merge]
 	tool = kdiff3
 [format]
