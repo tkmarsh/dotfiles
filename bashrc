@@ -124,6 +124,7 @@ SCAN_VIEW_PATH="/home/lskillen/work/llvm/llvm/tools/clang/tools/scan-view"
 set -o vi
 
 export PATH="$HOME/.local/bin:$SCAN_BUILD_PATH:$SCAN_VIEW_PATH:$PATH"
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export CLASSPATH="$HOME/work/antlr/antlr-4.3-complete.jar:$HOME/work/antlr/antlr-runtime-4.3.jar:$CLASSPATH"
 export LD_LIBRARY_PATH="$LIB_X86:$LIB_LOCAL:$LIB_OPENMAMA:$LIB_VULCAN:$LD_LIBRARY_PATH"
 export EDITOR=vim
@@ -134,6 +135,3 @@ if [ -f ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh ]; then
     export PATH=~/.vim/bundle/powerline/scripts:$PATH
     source ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 fi
-
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

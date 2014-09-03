@@ -9,3 +9,8 @@ install
 - Git clone to ~/.files (or some other place of your choosing).
 - Execute ~/.files/setup.sh
 - Enjoy!
+
+dependencies
+------------
+
+- xclip
