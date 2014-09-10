@@ -1,72 +1,75 @@
 set nocompatible               " Disable VI compatibility
 filetype off
 
-set rtp+=~/.vim/vundle/
-call vundle#begin()
+if &loadplugins
+    set rtp+=~/.vim/vundle/
+    call vundle#begin()
 
-" Package install: 
-" VIM: :PluginInstall
-" CLI: vim +PluginInstall +qall
+    " Package install: 
+    " VIM: :PluginInstall
+    " CLI: vim +PluginInstall +qall
 
-" Vim Vundle Package Manager
-Plugin 'gmarik/vundle'
+    " Vim Vundle Package Manager
+    Plugin 'gmarik/vundle'
 
-" Code Semantic Completion
-if v:version > 703 || v:version == 703 && has("patch584")
-    Plugin 'Valloric/YouCompleteMe'
-    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    let g:ycm_autoclose_preview_window_after_completion = 1
-    let g:ycm_min_num_of_chars_for_completion = 2
-    let g:ycm_confirm_extra_conf = 0
-    let g:ycm_seed_identifiers_with_syntax = 1
-    let g:ycm_register_as_syntastic_checker = 1
-    let g:syntastic_python_checkers = ['flake8']
+    " Code Semantic Completion
+    if v:version > 703 || v:version == 703 && has("patch584")
+        Plugin 'Valloric/YouCompleteMe'
+        nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        let g:ycm_autoclose_preview_window_after_completion = 1
+        let g:ycm_min_num_of_chars_for_completion = 2
+        let g:ycm_confirm_extra_conf = 0
+        let g:ycm_seed_identifiers_with_syntax = 1
+        let g:ycm_register_as_syntastic_checker = 1
+        let g:syntastic_python_checkers = ['flake8']
+    endif
+
+    " JIT Code Compilation
+    Plugin 'scrooloose/syntastic'
+    nnoremap <leader>e :Errors<CR>
+    let g:syntastic_enable_signs = 1
+    let g:syntastic_auto_jump = 0
+    let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+    let g:syntastic_error_symbol = '✗'
+    let g:syntastic_warning_symbol = '!'
+    let g:syntastic_enable_highlighting = 1
+
+    " Intensely orgasmic commenting (their words, not mine)
+    Plugin 'scrooloose/nerdcommenter'
+
+    " Vim-based Filesystem Explorer
+    " See: :help NERD_Tree.txt
+    Plugin 'scrooloose/nerdtree'
+    nnoremap <leader>n :NERDTreeToggle<CR>
+
+    " Powerline Status Bar
+    Plugin 'Lokaltog/powerline'
+    set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+    let g:Powerline_symbols = 'fancy'
+
+    " C++11 Enhanced Highlighting
+    Plugin 'octol/vim-cpp-enhanced-highlight'
+
+    " Fugitive - Git wrapper
+    " :Gitedit :Gitdiff :Gitblame etc.
+    Plugin 'tpope/vim-fugitive'
+    set statusline+=%{fugitive#statusline()}
+
+    " EasyMotion - Easy text searching
+    " <leader><leader><motion> (e.g. \\w for start of word search)
+    Plugin 'Lokaltog/vim-easymotion'
+    map <Leader> <Plug>(easymotion-prefix)
+    nmap s <Plug>(easymotion-s2)
+
+    " Full path fuzzy file, buffer, mru, tag
+    " See: :help ctrlp-commands
+    " See: :help ctrlp.txt
+    Plugin 'kien/ctrlp.vim'
+
+    " Gist support
+    Plugin 'mattn/gist-vim'
+    let g:gist_post_private = 1
 endif
-
-" JIT Code Compilation
-Plugin 'scrooloose/syntastic'
-nnoremap <leader>e :Errors<CR>
-let g:syntastic_enable_signs = 1
-let g:syntastic_auto_jump = 0
-let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '!'
-let g:syntastic_enable_highlighting = 1
-
-" Intensely orgasmic commenting (their words, not mine)
-Plugin 'scrooloose/nerdcommenter'
-
-" Vim-based Filesystem Explorer
-" See: :help NERD_Tree.txt
-Plugin 'scrooloose/nerdtree'
-nnoremap <leader>n :NERDTreeToggle<CR>
-
-" Powerline Status Bar
-Plugin 'Lokaltog/powerline'
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-let g:Powerline_symbols = 'fancy'
-
-" C++11 Enhanced Highlighting
-Plugin 'octol/vim-cpp-enhanced-highlight'
-
-" Fugitive - Git wrapper
-" :Gitedit :Gitdiff :Gitblame etc.
-Plugin 'tpope/vim-fugitive'
-set statusline+=%{fugitive#statusline()}
-
-" EasyMotion - Easy text searching
-" <leader><leader><motion> (e.g. \\w for start of word search)
-Plugin 'Lokaltog/vim-easymotion'
-map <Leader> <Plug>(easymotion-prefix)
-nmap s <Plug>(easymotion-s2)
-
-" Full path fuzzy file, buffer, mru, tag
-" See: :help ctrlp-commands
-" See: :help ctrlp.txt
-Plugin 'kien/ctrlp.vim'
-
-" Gist support
-Bundle 'mattn/gist-vim'
 
 filetype plugin indent on     " required!
 
@@ -110,6 +113,8 @@ set scrolloff=4                " Keep cursor <n> characters away from top/bottom
 set sidescrolloff=7            " Keep cursor <n> characters away from left/right
 set history=1000               " Store 1000 commands in history buffer
 set mouse=a                    " XTerm-style mouse (make selections easier)
+"set exrc                       " enable per-directory .vimrc files
+"set secure                     " disable unsafe commands in local .vimrc files
 
 set ls=2                       " Always show status line
 "set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
