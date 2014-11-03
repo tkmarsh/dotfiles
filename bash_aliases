@@ -38,7 +38,6 @@ function vim
         OPTS="--noplugin"
     fi
 
-    echo "Running vim ${OPTS:-""} $*"
     command vim ${OPTS:-""}$*
     unset OPTS
 }

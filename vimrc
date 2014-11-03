@@ -12,18 +12,6 @@ if &loadplugins
     " Vim Vundle Package Manager
     Plugin 'gmarik/vundle'
 
-    " Code Semantic Completion
-    if v:version > 703 || v:version == 703 && has("patch584")
-        Plugin 'Valloric/YouCompleteMe'
-        nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-        let g:ycm_autoclose_preview_window_after_completion = 1
-        let g:ycm_min_num_of_chars_for_completion = 2
-        let g:ycm_confirm_extra_conf = 0
-        let g:ycm_seed_identifiers_with_syntax = 1
-        let g:ycm_register_as_syntastic_checker = 1
-        let g:syntastic_python_checkers = ['flake8']
-    endif
-
     " JIT Code Compilation
     Plugin 'scrooloose/syntastic'
     nnoremap <leader>e :Errors<CR>
@@ -33,6 +21,19 @@ if &loadplugins
     let g:syntastic_error_symbol = '✗'
     let g:syntastic_warning_symbol = '!'
     let g:syntastic_enable_highlighting = 1
+    let g:syntastic_python_checkers = ['pyflakes', 'flake8']
+    let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+
+    " Code Semantic Completion
+    if v:version > 703 || v:version == 703 && has("patch584")
+        Plugin 'Valloric/YouCompleteMe'
+        nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        let g:ycm_autoclose_preview_window_after_completion = 1
+        let g:ycm_min_num_of_chars_for_completion = 2
+        let g:ycm_confirm_extra_conf = 0
+        let g:ycm_seed_identifiers_with_syntax = 1
+        let g:ycm_register_as_syntastic_checker = 1
+    endif
 
     " Intensely orgasmic commenting (their words, not mine)
     Plugin 'scrooloose/nerdcommenter'
@@ -69,6 +70,8 @@ if &loadplugins
     " Gist support
     Plugin 'mattn/gist-vim'
     let g:gist_post_private = 1
+
+    call vundle#end()
 endif
 
 filetype plugin indent on     " required!
@@ -79,6 +82,10 @@ autocmd BufReadPre SConscript set filetype=python
 au FileType python set autoindent
 au FileType python set smartindent
 au FileType python set textwidth=79 " PEP-8 Friendly
+
+au FileType ruby set autoindent
+au FileType ruby set smartindent
+au FileType ruby set textwidth=79 " Ruby Friendly
 
 syntax enable                  " Enable syntax highlighting
 set showcmd                    " Show incomplete commands
