@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Script to setup the dotfiles automagically.
 SELF=$BASH_SOURCE
 DIR=$(dirname "$(readlink -f "$SELF")")
 python $DIR/symlink.py
