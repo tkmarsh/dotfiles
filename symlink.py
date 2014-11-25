@@ -30,15 +30,19 @@ import sys
 home_dir = os.environ["HOME"]
 
 # Name of the directory where dotfiles are located.
-dotfiles_dir = os.path.dirname (os.path.realpath (__file__))
+try:
+    dotfiles_dir = sys.argv[1]
+except IndexError:
+    dotfiles_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Name of the directory where already-existing dotfiles should be moved.
-backup_dir = os.path.join (dotfiles_dir, "backup")
+backup_dir = os.path.join(dotfiles_dir, "backup")
 
 print backup_dir
 
 # List of things we should ignore in the dotfiles directory.
-ignore = [".git", "backup", "LICENSE", "README.md", "setup.sh", "symlink.py", "symlink.pyc"]
+ignore = [".git", "backup", "LICENSE", "README.md",
+          "setup.sh", "symlink.py", "symlink.pyc"]
 
 # Create backup directory if needed.
 try:
@@ -74,7 +78,8 @@ for filename in dotfiles:
             # Check to see if this is a symlink, which means it has
             # already been copied.
             if os.path.islink(dstpath):
-                print "{} is a symlink already so unlinking first.".format(dstpath)
+                print "{} is a symlink already " \
+                      "so unlinking first.".format(dstpath)
                 os.unlink(dstpath)
             else:
                 # This file already exists in the home directory,

@@ -13,27 +13,17 @@ if [[ ! -e .vim/vundle ]]
 then
     echo "Cloning Vundle repository ..."
     git clone https://github.com/gmarik/Vundle.vim.git .vim/vundle
-else
-    echo "Updating Vundle repository ..."
-    cd .vim/vundle
-    git pull
-    cd
 fi
 
 if [[ ! -e tomorrow-theme ]]
 then
     echo "Cloning Tomorrow Night Theme ..."
-    git clone https://github.com/chriskempson/tomorrow-theme/
-else
-    echo "Updating Tomorrow Night Theme ..."
-    cd tomorrow-theme
-    git pull
-    cd
+    git clone https://github.com/chriskempson/tomorrow-theme/ .tomorrow-theme
 fi
 
 echo "Symlinking Tomorrow Night Theme (vim) ..."
 mkdir -p .vim/colors
-find tomorrow-theme/vim/colors/ -name '*.vim' -exec sh -c 'ln -fs $(readlink -f {}) .vim/colors/$(basename {})' \;
+find .tomorrow-theme/vim/colors/ -name '*.vim' -exec sh -c 'ln -fs $(readlink -f {}) .vim/colors/$(basename {})' \;
 
 which fc-cache &>/dev/null
 if [[ $? -eq 0 ]]

@@ -1,19 +1,19 @@
 [alias]
-	unstage = reset HEAD --
-	last = log -1 HEAD
+    unstage = reset HEAD --
+    last = log -1 HEAD
     lg = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
-	visual = !gitk
-	stash-unapply = !git stash show -p | git apply -R
+    visual = !gitk
+    stash-unapply = !git stash show -p | git apply -R
 [apply]
     whitespace = fix
 [user]
-	name = Lee Skillen
-	email = lskillen@vulcanft.com
+    name = Lee Skillen
+    email = lskillen@vulcanft.com
 [core]
-	editor = vim
+    editor = vim
     whitespace = trailing-space, space-before-tab
 [merge]
-	tool = kdiff3
+    tool = kdiff3
 [format]
     headers = "Organization: Vulcan Financial Technologies\n"
     numbered = auto
