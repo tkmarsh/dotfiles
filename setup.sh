@@ -49,4 +49,9 @@ fi
 echo "Executing Vundle plugin installation ..."
 vim +PluginInstall +qall
 
+echo "Executing YouCompleteMe setup ..."
+cd .vim/bundle/YouComplete
+./install.sh --clang-completer --system-libclang --system-boost
+cd -
+
 popd &>/dev/null
