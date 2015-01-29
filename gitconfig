@@ -2,6 +2,7 @@
     unstage = reset HEAD --
     last = log -1 HEAD
     lg = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
+    pullall = "!sh -c 'for remote in $(git branch -r | grep -v \\>); do git branch --track $remote; done; git remote update && git pull --all'"
     visual = !gitk
     stash-unapply = !git stash show -p | git apply -R
 [apply]
