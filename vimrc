@@ -133,7 +133,7 @@ set background=dark            " Dark backgrounds
 set completeopt+=preview
 set backupdir=~/.vim/backup/
 set directory=/tmp/
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 set nobackup
 set noswapfile

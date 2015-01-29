@@ -21,9 +21,27 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+SSH_AGENT_FILE="$HOME/.sshagent"
+
 function check-ssh-agent
 {
     [ -S "$SSH_AUTH_SOCK" ] && { ssh-add -l >& /dev/null || [ $? -ne 2 ]; }
 }
 
-check-ssh-agent || eval "$(ssh-agent -s)" > /dev/null
+function start-agent
+{
+    check-ssh-agent || {
+        [ -f "$SSH_AGENT_FILE" ] && {
+            . "$SSH_AGENT_FILE" > /dev/null
+            check-ssh-agent || { rm -f $SSH_AGENT_FILE && start-agent; }
+        } || {
+            echo "Starting new SSH agent ..."
+            ssh-agent -s | sed 's/^echo/#echo/' > "${SSH_AGENT_FILE}"
+            chmod 600 "$SSH_AGENT_FILE"
+            start-agent
+        }
+    }
+}
+
+start-agent
+pulseaudio --start
