@@ -121,8 +121,8 @@ set scrolloff=4                " Keep cursor <n> characters away from top/bottom
 set sidescrolloff=7            " Keep cursor <n> characters away from left/right
 set history=1000               " Store 1000 commands in history buffer
 set mouse=a                    " XTerm-style mouse (make selections easier)
-"set exrc                       " enable per-directory .vimrc files
-"set secure                     " disable unsafe commands in local .vimrc files
+set exrc                       " enable per-directory .vimrc files
+set secure                     " disable unsafe commands in local .vimrc files
 
 set ls=2                       " Always show status line
 "set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
@@ -156,46 +156,6 @@ nnoremap <F12> ]czz
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
-" ex command for toggling hex mode - define mapping if desired
-command -bar Hexmode call ToggleHex()
-nnoremap <C-H> :Hexmode<CR>
-inoremap <C-H> <Esc>:Hexmode<CR>
-vnoremap <C-H> :<C-U>Hexmode<CR>
-
-" helper function to toggle hex mode
-function ToggleHex()
-    " hex mode should be considered a read-only operation
-    " save values for modified and read-only for restoration later,
-    " and clear the read-only flag for now
-    let l:modified=&mod
-    let l:oldreadonly=&readonly
-    let &readonly=0
-    let l:oldmodifiable=&modifiable
-    let &modifiable=1
-    if !exists("b:editHex") || !b:editHex
-        " save old options
-        let b:oldft=&ft
-        let b:oldbin=&bin
-        " set new options
-        setlocal binary " make sure it overrides any textwidth, etc.
-        let &ft="xxd"
-        " set status
-        let b:editHex=1
-        " switch to hex editor
-        %!xxd
-    else
-        " restore old options
-        let &ft=b:oldft
-        if !b:oldbin
-            setlocal nobinary
-        endif
-        " set status
-        let b:editHex=0
-        " return to normal editing
-        %!xxd -r
-    endif
-    " restore values for modified and read only state
-    let &mod=l:modified
-    let &readonly=l:oldreadonly
-    let &modifiable=l:oldmodifiable
-endfunction
+if filereadable(glob("~/.vimrc.local")) 
+    source ~/.vimrc.local
+endif
