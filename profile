@@ -44,4 +44,8 @@ function start-agent
 }
 
 start-agent
-pulseaudio --start
+
+command -v pulseaudio &>/dev/null &&
+(
+    pgrep pulseaudio &>/dev/null || pulseaudio --start
+)

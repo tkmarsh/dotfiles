@@ -72,6 +72,8 @@ if &loadplugins
     Plugin 'mattn/gist-vim'
     let g:gist_post_private = 1
 
+    " Enable better vim EOL whitespace support
+    Plugin 'ntpeters/vim-better-whitespace'
     call vundle#end()
 endif
 
@@ -142,15 +144,24 @@ set number                " Enable line numbers
 autocmd BufReadPre SConstruct set filetype=python
 autocmd BufReadPre SConscript set filetype=python
 
-au FileType python set autoindent smartindent
+au FileType python set autoindent
 au FileType python set textwidth=79 " PEP-8 Friendly
 
-au FileType ruby set autoindent smartindent
+au FileType ruby set autoindent
 au FileType ruby set textwidth=79            " Ruby Friendly
 au FileType ruby set shiftwidth=2 tabstop=2  " Ruby standard
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
+
+" Strip whitespaces endings on save
+function s:StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfunction
+autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
 
 " Source user local .vimrc
 if filereadable(glob("$HOME/.vimrc.local"))
