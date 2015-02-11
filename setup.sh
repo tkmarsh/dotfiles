@@ -2,56 +2,64 @@
 # Script to setup the dotfiles automagically.
 SELF=$BASH_SOURCE
 DIR=$(dirname "$(readlink -f "$SELF")")
+BUNDLE_HOME="$HOME/.vim/bundle"
+FONTS="$HOME/.fonts"
+FONTCONFIG="$HOME/.config/fontconfig/conf.d"
+COLOURS="$HOME/.vim/colors"
+
+echo "Symlinking dotfiles ..."
 python $DIR/symlink.py
 
-pushd `pwd` &>/dev/null
+test -d "$BUNDLE_HOME" ||
+(
+    echo "Cloning Vundle repository ..." &&
+    cd $HOME &&
+    git clone https://github.com/gmarik/Vundle.vim .vim/vundle
+)
 
-cd
-mkdir -p .vim
-mkdir -p .vim/backup
-if [[ ! -e .vim/vundle ]]
-then
-    echo "Cloning Vundle repository ..."
-    git clone https://github.com/gmarik/Vundle.vim.git .vim/vundle
-fi
-
-if [[ ! -e tomorrow-theme ]]
-then
-    echo "Cloning Tomorrow Night Theme ..."
+test -d "$HOME/.tomorrow-theme" ||
+(
+    echo "Cloning Tomorrow Night Theme ..." &&
     git clone https://github.com/chriskempson/tomorrow-theme/ .tomorrow-theme
-fi
+)
 
-echo "Symlinking Tomorrow Night Theme (vim) ..."
-mkdir -p .vim/colors
-find .tomorrow-theme/vim/colors/ -name '*.vim' -exec sh -c 'ln -fs $(readlink -f {}) .vim/colors/$(basename {})' \;
+test -f "$HOME/.vim/colors/Tomorrow-Night-Bright.vim" ||
+(
+    echo "Symlinking Tomorrow Night Theme (vim) ..." &&
+    (test -d "$COLOURS" || mkdir -p "$COLOURS") &&
+    find .tomorrow-theme/vim/colors/ -name '*.vim' -exec \
+        sh -c 'ln -fs $(readlink -f {}) .vim/colors/$(basename {})' \;
+)
 
-which fc-cache &>/dev/null
+which fc-cache &>/dev/null &&
 if [[ $? -eq 0 ]]
 then
     echo "Setting up powerline fonts ..."
-    mkdir -p .fonts/
-    mkdir -p .config/fontconfig/conf.d
-    cd .fonts
-    if [[ ! -e PowerlineSymbols.otf ]]
-    then
+
+    test -d "$FONTS" || mkdir -p "$FONTS"
+    test -d "$FONTCONFIG" || mkdir -p "$FONTCONFIG"
+
+    cd "$FONTS" &&
+    (
+        test -f PowerlineSymbols.otf ||
         wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf
-    fi
-    cd ../.config/fontconfig/conf.d/
-    if [[ ! -e 10-powerline-symbols.conf ]]
-    then
+    )
+
+    cd "$FONTCONFIG" &&
+    (
+        test -f 10-powerline-symbols.conf ||
         wget https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf
-    fi
-    fc-cache -vf ~/.fonts/
-else
-    echo "Cannot setup powerline fonts because fontconfig isn't installed!"
+    )
+
+    fc-cache -vf "$FONTS"
 fi
 
-echo "Executing Vundle plugin installation ..."
+echo "Executing Vundle plugin installation ..." &&
 vim +PluginInstall +qall
 
-echo "Executing YouCompleteMe setup ..."
-cd .vim/bundle/YouComplete
+which -v clang &>/dev/null &&
+cd $HOME &&
+test -d "$BUNDLE_HOME/YouCompleteMe" &&
+echo "Executing YouCompleteMe setup ..." &&
+cd "$BUNDLE_HOME/YouCompleteMe" &&
 ./install.sh --clang-completer --system-libclang --system-boost
-cd -
-
-popd &>/dev/null
