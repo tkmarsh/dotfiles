@@ -145,6 +145,7 @@ set number                " Enable line numbers
 
 autocmd BufReadPre SConstruct set filetype=python
 autocmd BufReadPre SConscript set filetype=python
+autocmd BufReadPre *.yaml, *.yml set filetype=yaml
 
 au FileType python set autoindent
 au FileType python set textwidth=79 " PEP-8 Friendly
@@ -152,6 +153,9 @@ au FileType python set textwidth=79 " PEP-8 Friendly
 au FileType ruby set autoindent
 au FileType ruby set textwidth=79            " Ruby Friendly
 au FileType ruby set shiftwidth=2 tabstop=2  " Ruby standard
+
+au FileType yaml set autoindent
+au FileType yaml set shiftwidth=2 tabstop=2  " YAML recommendation
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
