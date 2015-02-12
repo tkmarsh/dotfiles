@@ -5,7 +5,7 @@ if &loadplugins
     set rtp+=~/.vim/vundle/
     call vundle#begin()
 
-    " Package install: 
+    " Package install:
     " VIM: :PluginInstall
     " CLI: vim +PluginInstall +qall
 
@@ -25,7 +25,7 @@ if &loadplugins
     let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 
     " Code Semantic Completion
-    if executable("clang")
+    if isdirectory(glob("$HOME/.vim/bundle/YouCompleteMe"))
         if v:version > 703 || v:version == 703 && has("patch584")
             Plugin 'Valloric/YouCompleteMe'
             nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
