@@ -113,19 +113,20 @@ if ! shopt -oq posix; then
   fi
 fi
 
-SCAN_BUILD_PATH="/home/lskillen/work/llvm/llvm/tools/clang/tools/scan-build"
-SCAN_VIEW_PATH="/home/lskillen/work/llvm/llvm/tools/clang/tools/scan-view"
-
 set -o vi
 
-export PATH="$PATH:$SCAN_BUILD_PATH:$SCAN_VIEW_PATH"
-export CLASSPATH="$HOME/work/antlr/antlr-4.4-complete.jar:$HOME/work/antlr/antlr-runtime-4.4.jar"
+export PATH="/bin:/usr/sbin:/usr/bin"
 export LD_LIBRARY_PATH="/lib:/usr/lib:/usr/lib/x86_64-linux-gnu:/usr/local/lib:/opt/openmama/lib:/opt/vulcan/lib"
 export EDITOR=vim
+export VISUAL=vim
 export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
 export PYTHONDONTWRITEBYTECODE=1
 
-if [ -f ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh ]; then
-    export PATH=~/.vim/bundle/powerline/scripts:$PATH
+POWERLINE_HOME="$HOME/.vim/bundle/powerline"
+if [ -f "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh" ]; then
+    if [ "${PATH/$POWERLINE_HOME/}" != "$POWERLINE_HOME" ]; then
+        export PATH="$PATH:$POWERLINE_HOME/scripts"
+    fi
+
     source ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 fi
