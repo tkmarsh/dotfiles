@@ -48,8 +48,6 @@ if &loadplugins
 
     " Powerline Status Bar
     Plugin 'Lokaltog/powerline'
-    set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-    let g:Powerline_symbols = 'fancy'
 
     " C++11 Enhanced Highlighting
     Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -77,6 +75,11 @@ if &loadplugins
     " Enable better vim EOL whitespace support
     Plugin 'ntpeters/vim-better-whitespace'
     call vundle#end()
+endif
+
+if $POWERLINE_BINDINGS != ""
+    set rtp+=$POWERLINE_BINDINGS/vim/
+    let g:Powerline_symbols = 'fancy'
 endif
 
 filetype plugin indent on " required!

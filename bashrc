@@ -115,18 +115,31 @@ fi
 
 set -o vi
 
-export PATH="/bin:/usr/sbin:/usr/bin"
+export PATH="/bin:/usr/sbin:/usr/bin:/usr/local/sbin/:/usr/local/bin"
 export LD_LIBRARY_PATH="/lib:/usr/lib:/usr/lib/x86_64-linux-gnu:/usr/local/lib:/opt/openmama/lib:/opt/vulcan/lib"
 export EDITOR=vim
 export VISUAL=vim
 export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
 export PYTHONDONTWRITEBYTECODE=1
 
-POWERLINE_HOME="$HOME/.vim/bundle/powerline"
-if [ -f "$POWERLINE_HOME/powerline/bindings/bash/powerline.sh" ]; then
-    if [ "${PATH/$POWERLINE_HOME/}" != "$POWERLINE_HOME" ]; then
-        export PATH="$PATH:$POWERLINE_HOME/scripts"
-    fi
+command -v pip &>/dev/null
+if [ $? -eq 0 ]; then
+    export POWERLINE_HOME=$(pip show powerline-status | grep Location: | awk '{ print $2 }')
+fi
 
-    source ~/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
+if [ "$POWERLINE_HOME" == "" ]; then
+    export POWERLINE_HOME="$HOME/.vim/bundle/powerline"
+fi
+
+POWERLINE_SCRIPTS="$POWERLINE_HOME/scripts"
+if [ -d "$POWERLINE_SCRIPTS" ]; then
+    if [ "${PATH/$POWERLINE_SCRIPTS/}" != "$POWERLINE_SCRIPTS" ]; then
+        export PATH="$PATH:$POWERLINE_SCRIPTS"
+    fi
+fi
+
+export POWERLINE_BINDINGS="$POWERLINE_HOME/powerline/bindings"
+POWERLINE_BASH="$POWERLINE_BINDINGS/bash/powerline.sh"
+if [ -f "$POWERLINE_BASH" ]; then
+    source $POWERLINE_BASH
 fi
