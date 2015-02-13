@@ -75,7 +75,7 @@ fi
 echo "Executing Vundle plugin installation ..." &&
 vim +PluginInstall +qall
 
-which -v clang &>/dev/null
+command -v clang &>/dev/null
 if [ $? -eq 0 ]; then
     SYSTEM_CLANG="--system-libclang"
 else
