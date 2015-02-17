@@ -141,5 +141,9 @@ fi
 export POWERLINE_BINDINGS="$POWERLINE_HOME/powerline/bindings"
 POWERLINE_BASH="$POWERLINE_BINDINGS/bash/powerline.sh"
 if [ -f "$POWERLINE_BASH" ]; then
+    # See: https://powerline.readthedocs.org/en/latest/usage/shell-prompts.html#bash-prompt
+    powerline-daemon -q
+    POWERLINE_BASH_CONTINUATION=1
+    POWERLINE_BASH_SELECT=1
     source $POWERLINE_BASH
 fi
