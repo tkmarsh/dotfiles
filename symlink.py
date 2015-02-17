@@ -1,94 +1,133 @@
 #!/usr/bin/env python
-##############################################################################
-# Automatically symlink all dotfiles to the user's home directory.
-#
-# Copyright (c) 2013, Martey Dodoo.
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-##############################################################################
 import errno
+import itertools
 import os
+import logging
 import shutil
 import sys
 
-home_dir = os.environ["HOME"]
+SELF = os.path.dirname(os.path.realpath(__file__))
 
-# Name of the directory where dotfiles are located.
-try:
-    dotfiles_dir = sys.argv[1]
-except IndexError:
-    dotfiles_dir = os.path.dirname(os.path.realpath(__file__))
 
-# Name of the directory where already-existing dotfiles should be moved.
-backup_dir = os.path.join(dotfiles_dir, "backup")
+class SymLinker(object):
+    def __init__(self, dest_dir=None, dotfiles_dir=None, ignore=None,
+                 verbose=False):
+        self.dest_dir = dest_dir or os.environ["HOME"]
+        self.dotfiles_dir = dotfiles_dir
+        self.backup_dir = os.path.join(self.dotfiles_dir, "backup")
+        self.ignore = ignore or ["backup", "README.md",
+                                 "setup.sh", "symlink.py", "symlink.pyc"]
+        self.verbose = verbose
 
-print backup_dir
+    @property
+    def dotfiles_dir(self):
+        return self._dotfiles_dir
 
-# List of things we should ignore in the dotfiles directory.
-ignore = [".git", "backup", "LICENSE", "README.md",
-          "setup.sh", "symlink.py", "symlink.pyc"]
+    @dotfiles_dir.setter
+    def dotfiles_dir(self, value):
+        if not value:
+            try:
+                value = sys.argv[1]
+            except IndexError:
+                value = SELF
 
-# Create backup directory if needed.
-try:
-    os.mkdir(backup_dir)
-    print "Backup directory {} created.".format(backup_dir)
-except OSError as backup_creation_err:
-    if backup_creation_err.errno == errno.EEXIST:
-        print "Backup directory {} already exists.".format(backup_dir)
-    else:
-        raise
+        value = os.path.realpath(value)
+        self._dotfiles_dir = value
 
-# Generate a list of dotfiles from $dotfiles that we will need to link.
-dotfiles = os.listdir(dotfiles_dir)
+    def resolve(self, path=None):
+        from_path = self.source_path(path)
 
-# For each file/directory in this list, attempt to symlink to the
-# home directory.
-for filename in dotfiles:
-    if filename in ignore:
-        continue
+        if path:
+            self._link(path)
 
-    # Add dots to dotfile names.
-    dotfile = '.' + filename
-    srcpath = os.path.join(dotfiles_dir, filename)
-    dstpath = os.path.join(home_dir, dotfile)
-    bakpath = os.path.join(backup_dir, dotfile)
+        if not os.path.isdir(from_path):
+            return
 
-    # Assume that this is a directory and try to create a symlink.
-    try:
-        os.symlink(srcpath, dstpath)
-        print "Linked {} to {}.".format(srcpath, dstpath)
-    except OSError as link_err:
-        if link_err.errno == errno.EEXIST:
-            # Check to see if this is a symlink, which means it has
-            # already been copied.
-            if os.path.islink(dstpath):
-                print "{} is a symlink already " \
-                      "so unlinking first.".format(dstpath)
-                os.unlink(dstpath)
-            else:
-                # This file already exists in the home directory,
-                # so we move the old file to the backup directory.
-                print "{} already exists in {}.".format(dotfile, home_dir)
-                shutil.move(dstpath, bakpath)
-                print "Moved {} to {}".format(dotfile, backup_dir)
+        listdir = os.listdir(from_path)
 
-            os.symlink(srcpath, dstpath)
-            print "Linked {} to {}.".format(srcpath, dstpath)
+        if not path:
+            def not_ignored(x):
+                return x not in self.ignore
+
+            def not_dotfile(x):
+                return not x.startswith('.')
+
+            listdir = itertools.ifilter(not_ignored, listdir)
+            listdir = itertools.ifilter(not_dotfile, listdir)
+
+        for name in sorted(listdir):
+            rel_path = os.path.join(path, name) if path else name
+            if self.verbose:
+                logging.info("Checking: {}".format(rel_path))
+            self.resolve(path=rel_path)
+
+    def _link(self, path):
+        from_path = self.source_path(path)
+        to_path = self.dest_path(path)
+
+        if os.path.isdir(from_path):
+            # Ensure target exists and is a directory
+            if not os.path.lexists(to_path):
+                os.makedirs(to_path)
+            elif os.path.isdir(to_path):
+                return True
         else:
-            raise
+            try:
+                os.symlink(from_path, to_path)
+                logging.info("Linked: {} to {}".format(path, to_path))
+            except OSError as ex:
+                if ex.errno != errno.EEXIST:
+                    logging.error("Could not link: {} ({})".format(path, ex))
+                    return False
+
+                if os.path.samefile(from_path, to_path):
+                    # Already linked, and the same
+                    return True
+
+                if os.path.islink(to_path) or os.path.isfile(to_path):
+                    # Only backup and remove if target isn't a directory
+                    self._backup(path)
+
+                # Try again ...
+                try:
+                    os.symlink(from_path, to_path)
+                    logging.info("Linked: {} to {}".format(path, to_path))
+                except OSError as ex:
+                    logging.error("Could not link: {} ({})".format(path))
+                    return
+
+        if os.path.isdir(from_path) != os.path.isdir(to_path):
+            logging.error("Could not link: {} (Source/dest type mismatch)"
+                          .format(path))
+            return False
+
+        logging.info("Created: {}".format(to_path))
+        return True
+
+    def _backup(self, path, remove=False):
+        from_path = self.dest_path(path)
+        to_path = self.backup_path(path)
+        if not os.path.exists(to_path):
+            os.makedirs(to_path)
+        logging.info("Backing up: {}".format(path))
+        shutil.move(from_path, to_path)
+
+    def source_path(self, path):
+        if path:
+            return os.path.join(self.dotfiles_dir, path)
+        else:
+            return self.dotfiles_dir
+
+    def dest_path(self, path):
+        assert path is not None
+        return os.path.join(self.dest_dir, '.{}'.format(path))
+
+    def backup_path(self, path):
+        assert path is not None
+        return os.path.join(self.backup_dir, path)
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    linker = SymLinker()
+    linker.resolve()
