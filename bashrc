@@ -149,3 +149,7 @@ if [ -f "$POWERLINE_BASH" ]; then
     export POWERLINE_COMMAND
     export POWERLINE_CONFIG_COMMAND
 fi
+
+if [ -f "$HOME/.bashrc.local" ]; then
+    source "$HOME/.bashrc.local"
+fi

@@ -21,7 +21,7 @@ if &loadplugins
     let g:syntastic_error_symbol = '✗'
     let g:syntastic_warning_symbol = '!'
     let g:syntastic_enable_highlighting = 1
-    let g:syntastic_python_checkers = ['pyflakes', 'flake8']
+    let g:syntastic_python_checkers = ['flake8', 'pylint']
     let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 
     " Code Semantic Completion
