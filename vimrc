@@ -9,6 +9,22 @@ if &loadplugins
     " VIM: :PluginInstall
     " CLI: vim +PluginInstall +qall
 
+    " Solarized colourscheme
+    Plugin 'altercation/vim-colors-solarized'
+
+    " Dynamic tags support
+    " See :help ctags
+    " Tag navigation creates a stack which can be traversed with C^] (to find
+    " the source of a token) and C^T (to jump back up one level).
+    " Requires: sudo apt-get install exuberant-ctags
+    Plugin 'xolox/vim-misc'
+    Plugin 'xolox/vim-easytags'
+    Plugin 'majutsushi/tagbar'
+    let g:easytags_async = 1
+    let g:easytags_dynamic_files = 2
+    let g:easytags_auto_highlight = 0
+    nmap <silent> <leader>b :TagbarToggle<CR>
+
     " Vim Vundle Package Manager
     Plugin 'gmarik/vundle'
 
@@ -39,7 +55,9 @@ if &loadplugins
     endif
 
     " Intensely orgasmic commenting (their words, not mine)
+    " See: :Help NERD_Commenter.txt
     Plugin 'scrooloose/nerdcommenter'
+    let g:NERDSpaceDelims = 1
 
     " Vim-based Filesystem Explorer
     " See: :help NERD_Tree.txt
@@ -67,6 +85,7 @@ if &loadplugins
     " See: :help ctrlp-commands
     " See: :help ctrlp.txt
     Plugin 'kien/ctrlp.vim'
+    nmap <silent> <leader>. :CtrlPTag<cr>
 
     " Gist support
     Plugin 'mattn/gist-vim'
@@ -84,9 +103,6 @@ endif
 
 filetype plugin indent on " required!
 syntax enable             " Enable syntax highlighting
-
-color Tomorrow-Night-Bright    " Works well on my machine ;)
-hi Normal ctermbg=NONE
 
 " Map F1 to man page on current word (or use K)
 source $VIMRUNTIME/ftplugin/man.vim
@@ -106,8 +122,8 @@ nnoremap <CR> :noh<CR><CR>
 " Standard options
 set autowrite	          " Automatically save before commands like :next and :make
 set autoindent            " Match indentation of previous line
-set background=dark       " Dark backgrounds
 set backspace=indent,eol,start " Backspace through everything in insert mode
+set background=dark       " Dark background
 set clipboard=unnamedplus " Attempt to use clipboardplus for cp
 set expandtab             " Use spaces, not tabs
 set exrc                  " enable per-directory .vimrc files
@@ -145,6 +161,12 @@ set nobackup
 set nofoldenable          " Don't fold by default
 set nowrap                " Don't wrap lines automatically
 set number                " Enable line numbers
+
+"color Tomorrow-Night-Bright    " Works well on my machine ;)
+"hi Normal ctermbg=NONE
+let g:solarized_termtrans=1
+let g:solarized_termcolors=16
+color solarized
 
 autocmd BufReadPre SConstruct set filetype=python
 autocmd BufReadPre SConscript set filetype=python
