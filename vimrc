@@ -20,11 +20,15 @@ if &loadplugins
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-easytags'
     Plugin 'majutsushi/tagbar'
-    set tags=.vimtags;,~/.vim/tags
-    let g:easytags_async = 1
-    let g:easytags_file = '~/.vim/tags'
+    autocmd FileType * set tags=./.tags;,~/.vim/.vimtags
+    set cpoptions+=d
+    let g:easytags_file = '~/.vim/.vimtags'
+    let g:easytags_events = ['BufReadPost', 'BufWritePost']
     let g:easytags_dynamic_files = 2
+    let g:easytags_async = 1
     let g:easytags_auto_highlight = 0
+    let g:easytags_resolve_links = 1
+    let g:easytags_suppress_report = 1
     nmap <silent> <leader>b :TagbarToggle<CR>
 
     " Vim Vundle Package Manager
