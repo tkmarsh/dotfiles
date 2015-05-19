@@ -37,6 +37,7 @@ if &loadplugins
     " JIT Code Compilation
     Plugin 'scrooloose/syntastic'
     nnoremap <leader>e :Errors<CR>
+    let g:syntastic_check_on_open = 1
     let g:syntastic_enable_signs = 1
     let g:syntastic_auto_jump = 0
     let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
@@ -45,6 +46,7 @@ if &loadplugins
     let g:syntastic_enable_highlighting = 1
     let g:syntastic_python_checkers = ['flake8', 'pylint']
     let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+    let g:syntastic_python_pylint_post_args = '--rcfile="`upfind .pylintrc | head`"'
 
     " Code Semantic Completion
     if isdirectory(glob("$HOME/.vim/bundle/YouCompleteMe"))

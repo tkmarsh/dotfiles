@@ -19,12 +19,14 @@ function vim
     if [ $# -gt 0 ]; then
         for I in $@
         do
-            DIR=$(dirname $(readlink -f $I))
-            in_s3fsmount $DIR
-            if [[ $? -eq 1 ]]
-            then
-                INS3=1
-                break
+            if [[ "$I" != "" ]]; then
+                DIR=$(dirname $(readlink -f $I))
+                in_s3fsmount $DIR
+                if [[ $? -eq 1 ]]
+                then
+                    INS3=1
+                    break
+                fi
             fi
         done
     else
@@ -41,3 +43,16 @@ function vim
     command vim ${OPTS:-""}$*
     unset OPTS
 }
+
+function upfind
+{
+    pushd `pwd` &>/dev/null
+    while [[ $PWD != "/" ]] ; do
+        find "$PWD"/ -maxdepth 1 -name "$@"
+        cd ..
+    done
+    popd &>/dev/null
+}
+
+export -f vim
+export -f upfind
