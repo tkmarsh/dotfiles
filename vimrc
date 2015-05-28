@@ -132,7 +132,7 @@ set autowrite	          " Automatically save before commands like :next and :mak
 set autoindent            " Match indentation of previous line
 set backspace=indent,eol,start " Backspace through everything in insert mode
 set background=dark       " Dark background
-set clipboard=unnamedplus " Attempt to use clipboardplus for cp
+set clipboard=unnamed     " Attempt to use clipboardplus for cp
 set expandtab             " Use spaces, not tabs
 set exrc                  " enable per-directory .vimrc files
 set foldmethod=syntax     " Fold based on indentation
@@ -169,6 +169,10 @@ set nobackup
 set nofoldenable          " Don't fold by default
 set nowrap                " Don't wrap lines automatically
 set number                " Enable line numbers
+
+if has('unnamedplus')
+    set clipboard=unnamed,unnamedplus
+endif
 
 "color Tomorrow-Night-Bright    " Works well on my machine ;)
 "hi Normal ctermbg=NONE
