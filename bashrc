@@ -115,7 +115,7 @@ fi
 
 set -o vi
 
-export PATH="/bin:/usr/sbin:/usr/bin:/usr/local/sbin/:/usr/local/bin"
+export PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin/:/usr/local/bin"
 export LD_LIBRARY_PATH="/lib:/usr/lib:/usr/lib/x86_64-linux-gnu:/usr/local/lib:/opt/openmama/lib:/opt/vulcan/lib"
 export EDITOR=vim
 export VISUAL=vim
