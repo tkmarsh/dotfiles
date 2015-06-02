@@ -15,5 +15,4 @@ function upfind
     popd &>/dev/null
 }
 
-export -f vim
 export -f upfind
