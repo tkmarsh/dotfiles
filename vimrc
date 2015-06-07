@@ -37,6 +37,8 @@ if &loadplugins
     " JIT Code Compilation
     Plugin 'scrooloose/syntastic'
     nnoremap <leader>e :Errors<CR>
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
     let g:syntastic_check_on_open = 1
     let g:syntastic_enable_signs = 1
     let g:syntastic_auto_jump = 0
@@ -44,8 +46,11 @@ if &loadplugins
     let g:syntastic_error_symbol = '✗'
     let g:syntastic_warning_symbol = '!'
     let g:syntastic_enable_highlighting = 1
+    let g:syntastic_cpp_cpplint_exec = 'cpplint'
+    let g:syntastic_cpp_checkers = ['cppcheck', 'cpplint']
+    let g:syntastic_cpp_check_header = 1
     let g:syntastic_python_checkers = ['flake8', 'pylint']
-    let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+    let g:syntastic_ruby_checkers = ['ruby-lint', 'rubocop', 'mri']
     let g:syntastic_python_pylint_post_args = '--rcfile="`upfind .pylintrc | head`"'
 
     " Code Semantic Completion
@@ -53,12 +58,15 @@ if &loadplugins
         if v:version > 703 || v:version == 703 && has("patch584")
             Plugin 'Valloric/YouCompleteMe'
             nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+            nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
             let g:ycm_autoclose_preview_window_after_completion = 1
+            let g:ycm_always_populate_location_list = 1
+            let g:ycm_show_diagnostics_ui = 0
             let g:ycm_min_num_of_chars_for_completion = 2
             let g:ycm_confirm_extra_conf = 0
             let g:ycm_seed_identifiers_with_syntax = 1
-            let g:ycm_register_as_syntastic_checker = 1
             let g:ycm_key_invoke_completion = '<leader>i'
+            let g:ycm_register_as_syntastic_checker = 0
         endif
     endif
 
@@ -102,6 +110,9 @@ if &loadplugins
     " Enable better vim EOL whitespace support
     Plugin 'ntpeters/vim-better-whitespace'
     call vundle#end()
+
+    " Git gutter (show git diffs in gutter)
+    Plugin 'airblade/vim-gitgutter'
 endif
 
 if $POWERLINE_BINDINGS != ""
@@ -171,7 +182,7 @@ set nowrap                " Don't wrap lines automatically
 set number                " Enable line numbers
 
 if has('unnamedplus')
-    set clipboard=unnamed,unnamedplus
+    set clipboard=unnamedplus,unnamed
 endif
 
 "color Tomorrow-Night-Bright    " Works well on my machine ;)
