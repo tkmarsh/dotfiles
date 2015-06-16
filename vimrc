@@ -20,7 +20,7 @@ if &loadplugins
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-easytags'
     Plugin 'majutsushi/tagbar'
-    autocmd FileType * set tags=./.tags;,~/.vim/.vimtags
+    autocmd FileType * set tags=~/.vim/.vimtags
     set cpoptions+=d
     let g:easytags_file = '~/.vim/.vimtags'
     let g:easytags_events = ['BufReadPost', 'BufWritePost']
@@ -38,7 +38,7 @@ if &loadplugins
     Plugin 'scrooloose/syntastic'
     nnoremap <leader>e :Errors<CR>
     let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_auto_loc_list = 0
     let g:syntastic_check_on_open = 1
     let g:syntastic_enable_signs = 1
     let g:syntastic_auto_jump = 0
@@ -60,13 +60,11 @@ if &loadplugins
             nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
             nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
             let g:ycm_autoclose_preview_window_after_completion = 1
-            let g:ycm_always_populate_location_list = 1
-            let g:ycm_show_diagnostics_ui = 0
+            let g:ycm_show_diagnostics_ui = 1
             let g:ycm_min_num_of_chars_for_completion = 2
             let g:ycm_confirm_extra_conf = 0
             let g:ycm_seed_identifiers_with_syntax = 1
             let g:ycm_key_invoke_completion = '<leader>i'
-            let g:ycm_register_as_syntastic_checker = 0
         endif
     endif
 

@@ -15,4 +15,15 @@ function upfind
     popd &>/dev/null
 }
 
+function gitroot
+{
+    DIR=`upfind .git`
+    if [[ "$DIR" == "" ]]; then
+        echo `pwd`
+    else
+        echo `dirname $DIR`
+    fi
+}
+
 export -f upfind
+export -f gitroot
