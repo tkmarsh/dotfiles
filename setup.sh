@@ -6,6 +6,9 @@ BUNDLE_HOME="$HOME/.vim/bundle"
 VUNDLE_HOME="$HOME/.vim/vundle"
 FONTS="$HOME/.fonts"
 
+which pip &>/dev/null || { echo "pip is not installed; sudo apt-get install pip"; exit 1; }
+pip install --upgrade --user -r "$DIR/requirements.txt"
+
 WITH_YCM="no"
 
 for I in "$@"; do
