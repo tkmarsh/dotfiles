@@ -192,6 +192,7 @@ color solarized
 autocmd BufReadPre SConstruct set filetype=python
 autocmd BufReadPre SConscript set filetype=python
 autocmd BufReadPre *.yaml, *.yml set filetype=yaml
+autocmd BufReadPre *.csl set filetype=csl
 
 au FileType python set autoindent
 au FileType python set textwidth=79 " PEP-8 Friendly
@@ -213,7 +214,7 @@ function s:StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfunction
-autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
+autocmd FileType c,cpp,csl,java,php,ruby,python autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
 
 " Source user local .vimrc
 if filereadable(glob("$HOME/.vimrc.local"))
