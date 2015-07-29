@@ -92,7 +92,7 @@ if &loadplugins
     " EasyMotion - Easy text searching
     " <leader><leader><motion> (e.g. \\w for start of word search)
     Plugin 'Lokaltog/vim-easymotion'
-    map <Leader> <Plug>(easymotion-prefix)
+    map <leader> <Plug>(easymotion-prefix)
     nmap s <Plug>(easymotion-s2)
 
     " Full path fuzzy file, buffer, mru, tag
@@ -111,6 +111,7 @@ if &loadplugins
 
     " Git gutter (show git diffs in gutter)
     Plugin 'airblade/vim-gitgutter'
+    let g:gitgutter_max_signs = 5000
 endif
 
 if $POWERLINE_BINDINGS != ""
@@ -193,6 +194,7 @@ autocmd BufReadPre SConstruct set filetype=python
 autocmd BufReadPre SConscript set filetype=python
 autocmd BufReadPre *.yaml, *.yml set filetype=yaml
 autocmd BufReadPre *.csl set filetype=csl
+autocmd BufReadPre *.g4 set filetype=g4
 
 au FileType python set autoindent
 au FileType python set textwidth=79 " PEP-8 Friendly
@@ -208,13 +210,28 @@ au FileType yaml set shiftwidth=2 tabstop=2  " YAML recommendation
 nnoremap <CR> :noh<CR><CR>
 
 " Strip whitespaces endings on save
-function s:StripTrailingWhitespaces()
+function! s:StripTrailingWhitespaces()
     let l = line(".")
     let c = col(".")
     %s/\s\+$//e
     call cursor(l, c)
 endfunction
-autocmd FileType c,cpp,csl,java,php,ruby,python autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
+autocmd FileType c,cpp,csl,g4,java,php,ruby,python autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
+
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <C-W>z :ZoomToggle<CR>
 
 " Source user local .vimrc
 if filereadable(glob("$HOME/.vimrc.local"))
