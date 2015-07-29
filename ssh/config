@@ -1,4 +1,5 @@
 Host *
-ControlMaster auto
-ControlPath ~/.ssh/sockets/%r@%h-%p
-ControlPersist 600
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h-%p
+    ControlPersist 600
+    ForwardX11 true
