@@ -1,2 +1,4 @@
 flake8==2.4.0
+pip==7.1.0
+powerline-status==2.2
 pylint==1.4.3
