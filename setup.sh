@@ -6,6 +6,11 @@ BUNDLE_HOME="$HOME/.vim/bundle"
 VUNDLE_HOME="$HOME/.vim/vundle"
 FONTS="$HOME/.fonts"
 
+# sudo apt-get install aptitude
+# sudo apt-get install pip
+# sudo apt-get install tmux
+# sudo -H pip install --upgrade pip
+
 which pip &>/dev/null || { echo "pip is not installed; sudo apt-get install pip"; exit 1; }
 pip install --upgrade --user -r "$DIR/requirements.txt"
 
