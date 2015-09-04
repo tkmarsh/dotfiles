@@ -6,11 +6,7 @@ Hi, you may remember these common dotfiles from such installs as Ubuntu 8.04 (Ap
 install
 -------
 
-- Git clone to ~/.files (or some other place of your choosing).
-- Execute ~/.files/setup.sh
+- Clone
+- Execute setup.sh (from anywhere)
 - Enjoy!
 
-dependencies
-------------
-
-- xclip
