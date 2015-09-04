@@ -1,15 +1,19 @@
 Dotfiles
 ========
 
-Hi, you may remember these common dotfiles from such installs as Ubuntu 8.04
-(April 2008 - Hello Linux Edition), Ubuntu 9.10 (October 2009 - Dist-upgrade
-Failed, New OS Time, Edition), CentOS 5.6 (July 2011 - Feeling Experimental,
-Edition), Ubuntu 10.04 (September 2011 - CentOS Was Awful, Edition), Linux Mint
-13 (December 2012 - New Job, Edition), and Linux Mint 15 (July 2013, What Have
-I Done, Edition).
+Hi!  This is the repository for my dotfiles setup, including:
 
-Usage (simple)
---------------
+- Highly customised vim installation with vundle + plugins (see vimrc)
+- Solarized colourscheme for both vim and gnome-terminal [desktop].
+- Installation of system-wide packages (see packages.txt) [desktop].
+- Installation of python packages (see requirements.txt).
+- YouCompleteMe for clang-based semantic completion of code [desktop].
+- The "libgcrypt11" package for ubuntu 15.04 (for spotify, gah) [desktop].
+
+Please refer the simple/extended usage to see how this works.
+
+Installation
+------------
 
 - Clone
 - Execute setup.sh (from anywhere, see extended usage for more options).
@@ -18,9 +22,10 @@ Usage (simple)
 The default setup will install for desktop environments and MUST be run under
 sudo in order to install system packages (etc.)
 
-Usage (extended)
-----------------
+Extended Usage
+--------------
 
+```
 Usage: ./setup.sh [options]
   -e <stages(s)> A CSV-list of stages to exclude (default: ).
                    See -i for a full list of stages.
@@ -42,3 +47,27 @@ Usage: ./setup.sh [options]
                     * ycm: Install YouCompleteMe (requires vundle installation).
                    E.g. to only link dotfiles, use -i dotfiles.
   -h           Display usage (this text)
+```
+
+Making Changes
+--------------
+
+If you want to submit changes back then please issue a pull request.
+Procedure:
+
+- Fork the repository and make your changes on a new feature branch.
+- Raise a pull request to merge from that feature branch.
+- Detail what the changes are for and whether they are specific to OS/Env.
+
+Note: If the changes are customisation rather than fixes to the scripts or for
+additional features then I'm not likely to accept them - I might split the repo
+into two in the future to make this easier (i.e. one for scripts, one for the
+customisations).
+
+Disclaimer
+----------
+
+USE THESE DOTFILES AT YOUR OWN RISK.  These dotfiles meet my own requirements,
+but they may meet yours (or worse, ruin them).  Subsequent changes may break
+your environment and I cannot be held responsible for it doing so (feel free to
+send gripes about it though, and I'll try to help fix it.)
