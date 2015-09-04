@@ -15,8 +15,10 @@ class SymLinker(object):
         self.dest_dir = dest_dir or os.environ["HOME"]
         self.dotfiles_dir = dotfiles_dir
         self.backup_dir = os.path.join(self.dotfiles_dir, "backup")
-        self.ignore = ignore or ["backup", "README.md",
-                                 "setup.sh", "symlink.py", "symlink.pyc"]
+        self.ignore = ignore or [
+            "backup", "README.md", "requirements.txt", "packages.txt",
+            "stages.txt", "setup.sh", "symlink.py", "symlink.pyc"
+        ]
         self.verbose = verbose
 
     @property

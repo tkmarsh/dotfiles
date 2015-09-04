@@ -154,10 +154,4 @@ if [ -f "$HOME/.bashrc.local" ]; then
     source "$HOME/.bashrc.local"
 fi
 
-if [[ -d '/opt/chefdk' ]]; then
-    RUBY_VERSION="2.1.0"
-    export GEM_ROOT="/opt/chefdk/embedded/lib/ruby/gems/${RUBY_VERSION}"
-    export GEM_HOME="${HOME}/.chefdk/gem/ruby/${RUBY_VERSION}"
-    export GEM_PATH="${GEM_HOME}:${GEM_ROOT}"
-    export PATH="/opt/chefdk/bin/:/opt/chefdk/embedded/bin:${GEM_HOME}/bin:$PATH"
-fi
+which chef &>/dev/null && eval "$(chef shell-init bash)"

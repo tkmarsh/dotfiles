@@ -1,0 +1,7 @@
+aptitude
+cmake
+dconf-cli
+python-dev
+python-pip
+tmux
+vim-gnome
