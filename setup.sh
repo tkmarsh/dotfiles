@@ -30,8 +30,13 @@ function check_failure {
 }
 
 function skip_setup {
-    test "$force" == "true" && return 1
-    echo " - Already setup, use -f (force) to force setup again."
+    local no_force_reason="$1"
+    if [[ -z "no_force_reason" ]]; then
+        test "$force" == "true" && return 1
+        echo " - Already setup, use -f (force) to force setup again."
+    else
+        echo " - Already setup, can't be forced: ${no_force_reason}."
+    fi
     return 0
 }
 
@@ -134,6 +139,20 @@ function setup_fonts {
     check_failure || echo " - OK!"
 }
 
+function setup_libgcrypt11 {
+    is_desktop_mode || return 0
+    is_stage_active "libgcrypt11" || return 0
+    echo
+    echo "Setting up libgcrypt11..."
+    dpkg -l | grep libgcrypt11 &>/dev/null &&
+        skip_setup "uninstall libgcrypt11 instead" && return 0
+    local tmp_dir=$(mktemp -d)
+    local deb_file="libgcrypt11_1.5.3-2ubuntu4.2_amd64.deb"
+    wget "https://launchpad.net/ubuntu/+archive/primary/+files/$deb_file" \
+        -O "$tmp_dir/$deb_file"
+    run_as_sudo dpkg -i "$tmp_dir/$deb_file"
+}
+
 function setup_packages {
     is_desktop_mode || return 0
     is_stage_active "packages" || return 0
@@ -211,6 +230,7 @@ Usage: ./$self_name [options]
                     - dotfiles: Link dotfiles.
                     * colours: Setup terminal colours.
                     * fonts: Setup terminal fonts.
+                    * libgcrypt11: Setup libgcrypt11 (Ubuntu 15.04+ only).
                     * packages: Install packages from packages.txt
                     - pip: Install pip/python packages from requirements.txt
                     - vundle: Install Vim Bundle (Vundle) plugins.
@@ -266,6 +286,7 @@ setup_pip
 setup_vundle
 setup_fonts
 setup_colours
+setup_libgcrypt11
 setup_ycm
 
 # https://github.com/Anthony25/gnome-terminal-colors-solarized
