@@ -1,7 +1,7 @@
 set nocompatible               " Disable VI compatibility
 filetype off
 
-if &loadplugins
+if isdirectory(glob("$HOME/.vim/vundle")) && &loadplugins
     set rtp+=~/.vim/vundle/
     call vundle#begin()
 
@@ -140,35 +140,37 @@ nnoremap <F12> ]czz
 nnoremap <CR> :noh<CR><CR>
 
 " Standard options
-set autowrite	          " Automatically save before commands like :next and :make
+set autowrite             " Automatically save before commands like :next and :make
 set autoindent            " Match indentation of previous line
 set backspace=indent,eol,start " Backspace through everything in insert mode
 set background=dark       " Dark background
-set clipboard=unnamed     " Attempt to use clipboardplus for cp
+set clipboard=unnamedplus " Attempt to use clipboardplus for cp
 set expandtab             " Use spaces, not tabs
 set exrc                  " enable per-directory .vimrc files
 set foldmethod=syntax     " Fold based on indentation
 set foldnestmax=3         " Deepest fold is 3 levels
-set hidden		          " Hide buffers when they are abandoned
+set hidden                " Hide buffers when they are abandoned
 set history=1000          " Store 1000 commands in history buffer
 set hlsearch              " Highlight search terms
-set ignorecase	          " Do case insensitive matching
-set incsearch	          " Incremental search
+set ignorecase            " Do case insensitive matching
+set incsearch             " Incremental search
 set ls=2                  " Always show status line
-set mouse=a		          " Enable mouse usage (all modes)
+set mouse=a               " Enable mouse usage (all modes)
 set nocursorline          " Don't highlight the current line
 set noerrorbells          " Turn error bells off
+set nofoldenable          " Don't fold by default
 set nolist                " Don't visualise characters
 set novisualbell          " Turn visual bells off
+set nowrap                " Don't wrap lines automatically
 set ruler                 " Always display row/col (cursor) position.
 set scrolloff=4           " Keep cursor <n> characters away from top/bottom
 set secure                " disable unsafe commands in local .vimrc files
 set shiftwidth=4          " Tabs = 4 spaces
-set showcmd		          " Show (partial) command in status line.
-set showmatch	          " Show matching brackets
+set showcmd               " Show (partial) command in status line.
+set showmatch             " Show matching brackets
 set showmatch             " Show matching parentheses
 set sidescrolloff=7       " Keep cursor <n> characters away from left/right
-set smartcase	          " Do smart case matching
+set smartcase             " Do smart case matching
 set synmaxcol=120         " Only highlight syntax upto 120 characters
 set tabstop=4             " Tabs = 4 spaces
 set t_Co=256              " Set terminal to 256 colours
@@ -180,8 +182,6 @@ set wildmenu              " Enhanced command line completion
 set completeopt+=preview
 set directory=/tmp/
 set nobackup
-set nofoldenable          " Don't fold by default
-set nowrap                " Don't wrap lines automatically
 set number                " Enable line numbers
 
 if has('unnamedplus')
@@ -197,11 +197,12 @@ silent! color solarized
 autocmd BufReadPre SConstruct set filetype=python
 autocmd BufReadPre SConscript set filetype=python
 autocmd BufReadPre *.yaml, *.yml set filetype=yaml
+autocmd BufReadPre *.json set filetype=json
 autocmd BufReadPre *.csl set filetype=csl
 autocmd BufReadPre *.g4 set filetype=g4
 
 au FileType python set autoindent
-au FileType python set textwidth=79 " PEP-8 Friendly
+au FileType python set textwidth=79          " PEP-8 Friendly
 
 au FileType ruby set autoindent
 au FileType ruby set textwidth=79            " Ruby Friendly
@@ -209,6 +210,9 @@ au FileType ruby set shiftwidth=2 tabstop=2  " Ruby standard
 
 au FileType yaml set autoindent
 au FileType yaml set shiftwidth=2 tabstop=2  " YAML recommendation
+
+au FileType json set autoindent
+au FileType json set shiftwidth=2 tabstop=2  " JSON recommendation
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
@@ -220,7 +224,8 @@ function! s:StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfunction
-autocmd FileType c,cpp,csl,g4,java,php,ruby,python autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
+autocmd FileType c,cpp,java,php,python,ruby autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
+autocmd FileType csl,g4,json,yaml autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
 
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
