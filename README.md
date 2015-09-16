@@ -64,10 +64,15 @@ additional features then I'm not likely to accept them - I might split the repo
 into two in the future to make this easier (i.e. one for scripts, one for the
 customisations).
 
+Further Reading
+---------------
+
+Check out: http://dotfiles.github.io/
+
 Disclaimer
 ----------
 
 USE THESE DOTFILES AT YOUR OWN RISK.  These dotfiles meet my own requirements,
-but they may meet yours (or worse, ruin them).  Subsequent changes may break
+but they may not meet yours (or worse, ruin them).  Subsequent changes may break
 your environment and I cannot be held responsible for it doing so (feel free to
 send gripes about it though, and I'll try to help fix it.)
