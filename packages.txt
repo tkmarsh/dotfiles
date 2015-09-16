@@ -1,6 +1,7 @@
 aptitude
 cmake
 dconf-cli
+exuberant-ctags
 python-dev
 python-pip
 tmux
