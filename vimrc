@@ -1,8 +1,11 @@
 set nocompatible               " Disable VI compatibility
 filetype off
 
-if isdirectory(glob("$HOME/.vim/vundle")) && &loadplugins
-    set rtp+=~/.vim/vundle/
+let vimhome = expand("$HOME/.vim")
+let vundlehome = vimhome."/vundle"
+
+if isdirectory(vundlehome) && &loadplugins
+    exe 'set rtp+=' . vundlehome
     call vundle#begin()
 
     " Package install:
@@ -20,9 +23,10 @@ if isdirectory(glob("$HOME/.vim/vundle")) && &loadplugins
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-easytags'
     Plugin 'majutsushi/tagbar'
-    autocmd FileType * set tags=~/.vim/.vimtags
+    let tagshome = vimhome."/tags"
+    exec 'autocmd FileType * set tags='.tagshome
     set cpoptions+=d
-    let g:easytags_file = '~/.vim/.vimtags'
+    let g:easytags_file = tagshome
     let g:easytags_events = ['BufReadPost', 'BufWritePost']
     let g:easytags_dynamic_files = 2
     let g:easytags_async = 1
@@ -55,8 +59,9 @@ if isdirectory(glob("$HOME/.vim/vundle")) && &loadplugins
 
     " Code Semantic Completion
     if v:version > 703 || v:version == 703 && has("patch584")
-        if isdirectory(glob("$HOME/.vim/bundle/YouCompleteMe"))
-            if filereadable(glob("$HOME/.vim/bundle/YouCompleteMe/ycm_core.so"))
+        let ycmhome = vimhome."/bundle/YouCompleteMe"
+        if isdirectory(ycmhome)
+            if filereadable(ycmhome."/ycm_core.so")
                 Plugin 'Valloric/YouCompleteMe'
                 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
                 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
@@ -188,11 +193,21 @@ if has('unnamedplus')
     set clipboard=unnamedplus,unnamed
 endif
 
-"color Tomorrow-Night-Bright    " Works well on my machine ;)
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let &undodir = vimhome."/undo"
+    silent! call system('mkdir -p ' . &undodir)
+    set undofile
+endif
+
 "hi Normal ctermbg=NONE
-let g:solarized_termtrans=1
-let g:solarized_termcolors=16
-silent! color solarized
+try
+    let g:solarized_termtrans=1
+    let g:solarized_termcolors=16
+    color solarized
+catch
+    color Tomorrow-Night-Bright
+endtry
 
 autocmd BufRead SConstruct set filetype=python
 autocmd BufRead SConscript set filetype=python
