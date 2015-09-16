@@ -31,7 +31,7 @@ function check_failure {
 
 function skip_setup {
     local no_force_reason="$1"
-    if [[ -z "no_force_reason" ]]; then
+    if [[ -z "$no_force_reason" ]]; then
         test "$force" == "true" && return 1
         echo " - Already setup, use -f (force) to force setup again."
     else
@@ -79,7 +79,7 @@ function run_as_sudo {
 
 function run_as_user {
     is_sudo && {
-        sudo -u $SUDO_USER $*
+        sudo -H -u $SUDO_USER $*
     } || {
         $*
     }
@@ -270,6 +270,12 @@ function finish {
     cd $orig_dir
 }
 
+function graceful_exit {
+    echo "Caught signal, gracefully exiting ..."
+    exit 1
+}
+
+trap graceful_exit SIGINT SIGTERM
 trap finish exit
 
 setup_packages
@@ -289,7 +295,6 @@ setup_colours
 setup_libgcrypt11
 setup_ycm
 
-# https://github.com/Anthony25/gnome-terminal-colors-solarized
 echo
 echo "You're ready to rock!"
 echo

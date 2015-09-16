@@ -94,7 +94,7 @@ class SymLinker(object):
                 try:
                     os.symlink(from_path, to_path)
                     logging.info("Linked: {} to {}".format(path, to_path))
-                except OSError as ex:
+                except (shutil.Error, OSError) as ex:
                     logging.error("Could not link: {} ({})".format(path))
                     return
 
@@ -109,9 +109,15 @@ class SymLinker(object):
     def _backup(self, path, remove=False):
         from_path = self.dest_path(path)
         to_path = self.backup_path(path)
-        if not os.path.exists(to_path):
-            os.makedirs(to_path)
+        if not os.path.exists(os.path.dirname(to_path)):
+            os.makedirs(os.path.dirname(to_path))
         logging.info("Backing up: {}".format(path))
+        if os.path.exists(to_path):
+            if os.path.isfile(from_path) != os.path.isfile(to_path):
+                if os.path.isfile(to_path):
+                    os.unlink(to_path)
+                else:
+                    shutil.rmtree(to_path)
         shutil.move(from_path, to_path)
 
     def source_path(self, path):

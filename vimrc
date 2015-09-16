@@ -194,12 +194,13 @@ let g:solarized_termtrans=1
 let g:solarized_termcolors=16
 silent! color solarized
 
-autocmd BufReadPre SConstruct set filetype=python
-autocmd BufReadPre SConscript set filetype=python
-autocmd BufReadPre *.yaml, *.yml set filetype=yaml
-autocmd BufReadPre *.json set filetype=json
-autocmd BufReadPre *.csl set filetype=csl
-autocmd BufReadPre *.g4 set filetype=g4
+autocmd BufRead SConstruct set filetype=python
+autocmd BufRead SConscript set filetype=python
+autocmd BufRead Berksfile set filetype=ruby
+autocmd BufRead *.yaml, *.yml set filetype=yaml
+autocmd BufRead *.json set filetype=json
+autocmd BufRead *.csl set filetype=csl
+autocmd BufRead *.g4 set filetype=g4
 
 au FileType python set autoindent
 au FileType python set textwidth=79          " PEP-8 Friendly
