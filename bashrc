@@ -115,6 +115,7 @@ fi
 
 set -o vi
 
+test "$PATH" == *"$HOME/.bin"* || export PATH="$PATH:$HOME/.bin"
 export EDITOR=vim
 export VISUAL=vim
 export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
@@ -148,7 +149,7 @@ if [ -f "$POWERLINE_BASH" ]; then
     export POWERLINE_CONFIG_COMMAND
 fi
 
-which chef &>/dev/null && eval "$(chef shell-init bash)"
+command -v direnv &>/dev/null && eval "$(direnv hook bash)"
 
 if [ -f "$HOME/.bashrc.local" ]; then
     source "$HOME/.bashrc.local"
