@@ -119,6 +119,9 @@ if isdirectory(vundlehome) && &loadplugins
     " Git gutter (show git diffs in gutter)
     Plugin 'airblade/vim-gitgutter'
     let g:gitgutter_max_signs = 5000
+
+    " Better Ruby syntax support
+    Plugin 'vim-ruby/vim-ruby'
 endif
 
 if $POWERLINE_BINDINGS != ""
@@ -152,7 +155,7 @@ set background=dark       " Dark background
 set clipboard=unnamedplus " Attempt to use clipboardplus for cp
 set expandtab             " Use spaces, not tabs
 set exrc                  " enable per-directory .vimrc files
-set foldmethod=syntax     " Fold based on indentation
+set foldmethod=indent     " Fold based on indentation
 set foldnestmax=3         " Deepest fold is 3 levels
 set hidden                " Hide buffers when they are abandoned
 set history=1000          " Store 1000 commands in history buffer
@@ -165,6 +168,7 @@ set nocursorline          " Don't highlight the current line
 set noerrorbells          " Turn error bells off
 set nofoldenable          " Don't fold by default
 set nolist                " Don't visualise characters
+set norelativenumber      " Don't show relative numbers for lines
 set novisualbell          " Turn visual bells off
 set nowrap                " Don't wrap lines automatically
 set ruler                 " Always display row/col (cursor) position.
@@ -181,6 +185,7 @@ set tabstop=4             " Tabs = 4 spaces
 set t_Co=256              " Set terminal to 256 colours
 set title                 " Set the terminals title
 set ttyfast               " Smoother changes
+set lazyredraw            " Smoother changes
 set wildmenu              " Enhanced command line completion
 
 " Customisations
@@ -217,17 +222,13 @@ autocmd BufRead *.json set filetype=json
 autocmd BufRead *.csl set filetype=csl
 autocmd BufRead *.g4 set filetype=g4
 
-au FileType python set autoindent
 au FileType python set textwidth=79          " PEP-8 Friendly
 
-au FileType ruby set autoindent
 au FileType ruby set textwidth=79            " Ruby Friendly
 au FileType ruby set shiftwidth=2 tabstop=2  " Ruby standard
+au FileType ruby set re=1                    " Use older regex engine for Ruby
 
-au FileType yaml set autoindent
 au FileType yaml set shiftwidth=2 tabstop=2  " YAML recommendation
-
-au FileType json set autoindent
 au FileType json set shiftwidth=2 tabstop=2  " JSON recommendation
 
 " This unsets the "last search pattern" register by hitting return
