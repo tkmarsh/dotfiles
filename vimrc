@@ -241,8 +241,9 @@ function! s:StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfunction
-autocmd FileType c,cpp,java,php,python,ruby autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
-autocmd FileType csl,g4,json,yaml autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
+
+autocmd FileType c,cpp,csl,g4,java,json,markdown,php,python,ruby,yaml
+    \ autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
 
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
