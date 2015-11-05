@@ -226,7 +226,7 @@ endtry
 
 autocmd BufRead SConstruct,SConscript
   \ set filetype=python
-autocmd BufRead Berksfile,*.erb
+autocmd BufRead Berksfile
   \ set filetype=ruby
 autocmd BufRead *.yaml,*.yml
   \ set filetype=yaml
@@ -259,7 +259,7 @@ function! s:StripTrailingWhitespaces()
   call cursor(l, c)
 endfunction
 
-autocmd FileType c,cpp,csl,g4,java,json,markdown,php,python,ruby,yaml,vim
+autocmd FileType c,cpp,csl,eruby,g4,java,json,markdown,php,python,ruby,yaml,vim
   \ autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
 
 " Zoom / Restore window.
