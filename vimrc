@@ -54,7 +54,7 @@ if isdirectory(vundlehome) && &loadplugins
   let g:syntastic_cpp_checkers = ['cppcheck', 'cpplint']
   let g:syntastic_cpp_check_header = 1
   let g:syntastic_python_checkers = ['flake8', 'pylint']
-  let g:syntastic_ruby_checkers = ['ruby-lint', 'rubocop', 'mri']
+  let g:syntastic_ruby_checkers = ['mri', 'rubocop']
   let g:syntastic_python_pylint_post_args = '--rcfile="`upfind .pylintrc | head`"'
 
   " Code Semantic Completion
@@ -224,13 +224,18 @@ catch
   color Tomorrow-Night-Bright
 endtry
 
-autocmd BufRead SConstruct set filetype=python
-autocmd BufRead SConscript set filetype=python
-autocmd BufRead Berksfile set filetype=ruby
-autocmd BufRead *.yaml, *.yml set filetype=yaml
-autocmd BufRead *.json set filetype=json
-autocmd BufRead *.csl set filetype=csl
-autocmd BufRead *.g4 set filetype=g4
+autocmd BufRead SConstruct,SConscript
+  \ set filetype=python
+autocmd BufRead Berksfile,*.erb
+  \ set filetype=ruby
+autocmd BufRead *.yaml,*.yml
+  \ set filetype=yaml
+autocmd BufRead *.json
+  \ set filetype=json
+autocmd BufRead *.csl
+  \ set filetype=csl
+autocmd BufRead *.g4
+  \ set filetype=g4
 
 au FileType python set textwidth=79          " PEP-8 Friendly
 
@@ -254,7 +259,7 @@ function! s:StripTrailingWhitespaces()
   call cursor(l, c)
 endfunction
 
-autocmd FileType c,cpp,csl,g4,java,json,markdown,php,python,ruby,yaml
+autocmd FileType c,cpp,csl,g4,java,json,markdown,php,python,ruby,yaml,vim
   \ autocmd BufWritePre <buffer> :call s:StripTrailingWhitespaces()
 
 " Zoom / Restore window.
