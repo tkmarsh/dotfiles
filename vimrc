@@ -56,6 +56,7 @@ if isdirectory(vundlehome) && &loadplugins
   let g:syntastic_python_checkers = ['flake8', 'pylint']
   let g:syntastic_ruby_checkers = ['mri', 'rubocop']
   let g:syntastic_python_pylint_post_args = '--rcfile="`upfind .pylintrc | head`"'
+  let g:syntastic_ruby_rubocop_exec = 'chef exec rubocop'
 
   " Code Semantic Completion
   if v:version > 703 || v:version == 703 && has("patch584")
@@ -239,9 +240,9 @@ autocmd BufRead *.g4
 
 au FileType python set textwidth=79          " PEP-8 Friendly
 
-au FileType ruby set textwidth=79            " Ruby Friendly
-au FileType ruby set shiftwidth=2 tabstop=2  " Ruby standard
-au FileType ruby set re=1                    " Use older regex engine for Ruby
+au FileType eruby,ruby set textwidth=79            " Ruby Friendly
+au FileType eruby,ruby set shiftwidth=2 tabstop=2  " Ruby standard
+au FileType eruby,ruby set re=1                    " Use older regex engine for Ruby
 
 au FileType yaml set shiftwidth=2 tabstop=2  " YAML recommendation
 au FileType json set shiftwidth=2 tabstop=2  " JSON recommendation
