@@ -23,8 +23,9 @@
     keepsubject = true
 [push]
     default = simple
+    followtags = true
 [pull]
-	rebase = true
+    rebase = true
 [sendemail]
     confirm = always
     smtpencryption = tls
