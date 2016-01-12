@@ -131,8 +131,11 @@ if isdirectory(vundlehome) && &loadplugins
   augroup pencil
     autocmd!
     autocmd FileType markdown,mkd call pencil#init()
-    autocmd FileType text         call pencil#init({'wrap': 'hard'})
+    autocmd FileType text         call pencil#init({'wrap': 'hard', 'autoformat': 0})
   augroup END
+
+  noremap <buffer> <silent> <F7> :<C-u>PFormatToggle<cr>
+  inoremap <buffer> <silent> <F7> <C-o>:PFormatToggle<cr>
 endif
 
 if $POWERLINE_BINDINGS != ""
