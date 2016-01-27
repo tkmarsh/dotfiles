@@ -1,3 +1,7 @@
+Host github.com
+    ControlMaster no
+    ForwardX11 false
+
 Host *
     ControlMaster auto
     ControlPath ~/.ssh/sockets/%r@%h-%p
