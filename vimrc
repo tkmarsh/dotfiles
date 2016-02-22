@@ -251,6 +251,7 @@ au FileType yaml set shiftwidth=2 tabstop=2  " YAML recommendation
 au FileType json set shiftwidth=2 tabstop=2  " JSON recommendation
 
 au FileType vim set shiftwidth=2 tabstop=2
+au FileType css set shiftwidth=2 tabstop=2
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
