@@ -167,6 +167,7 @@ set autoindent            " Match indentation of previous line
 set backspace=indent,eol,start " Backspace through everything in insert mode
 set background=dark       " Dark background
 set clipboard=unnamedplus " Attempt to use clipboardplus for cp
+set encoding=utf-8        " Use UTF-8 for character encoding
 set expandtab             " Use spaces, not tabs
 set exrc                  " enable per-directory .vimrc files
 set foldmethod=indent     " Fold based on indentation
@@ -252,6 +253,8 @@ au FileType json set shiftwidth=2 tabstop=2  " JSON recommendation
 
 au FileType vim set shiftwidth=2 tabstop=2
 au FileType css set shiftwidth=2 tabstop=2
+
+au FileType text,markdown,html set textwidth=0
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>

@@ -16,7 +16,7 @@
 [merge]
     tool = kdiff3
 [format]
-    headers = "Organization: Vulcan Financial Technologies\n"
+    headers = "Organization: Cloudsmith Ltd\n"
     numbered = auto
     signoff = true
     coverletter = auto
@@ -30,7 +30,7 @@
     confirm = always
     smtpencryption = tls
     smtpserver = smtp.gmail.com
-    smtpuser = lskillen@vulcanft.com
+    smtpuser = lskillen@cloudsmith.io
     smtpserverport = 587
     smtpsslcertpath = /etc/ssl/certs/ca-bundle.trust.crt
     suppresscc = self

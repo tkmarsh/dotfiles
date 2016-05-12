@@ -123,7 +123,7 @@ export PYTHONDONTWRITEBYTECODE=1
 
 command -v pip &>/dev/null
 if [ $? -eq 0 ]; then
-    export POWERLINE_HOME=$(pip show powerline-status | grep Location: | awk '{ print $2 }')
+    export POWERLINE_HOME="$(pip show powerline-status | grep Location: | awk '{ print $2 }')"
 fi
 
 if [ -z "$POWERLINE_HOME" ]; then
