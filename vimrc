@@ -128,6 +128,11 @@ if isdirectory(vundlehome) && &loadplugins
   Plugin 'reedes/vim-pencil'
   let g:pencil#wrapModeDefault = 'soft'
 
+  " HTML Tag Matching
+  Plugin 'valloric/MatchTagAlways'
+  let g:mta_use_matchparen_group = 1
+  nnoremap <leader>% :MtaJumpToOtherTag<cr>
+
   augroup pencil
     autocmd!
     autocmd FileType markdown,mkd call pencil#init()
@@ -255,6 +260,7 @@ au FileType vim set shiftwidth=2 tabstop=2
 au FileType css set shiftwidth=2 tabstop=2
 
 au FileType text,markdown,html set textwidth=0
+au FileType html shiftwidth=2 tabstop=2
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
