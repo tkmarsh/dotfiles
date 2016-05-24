@@ -53,7 +53,7 @@ if isdirectory(vundlehome) && &loadplugins
   let g:syntastic_cpp_cpplint_exec = 'cpplint'
   let g:syntastic_cpp_checkers = ['cppcheck', 'cpplint']
   let g:syntastic_cpp_check_header = 1
-  let g:syntastic_python_checkers = ['flake8', 'pylint']
+  let g:syntastic_python_checkers = ['flake8']
   let g:syntastic_ruby_checkers = ['mri', 'rubocop']
   let g:syntastic_python_pylint_post_args = '--rcfile="`upfind .pylintrc | head`"'
   let g:syntastic_ruby_rubocop_exec = 'chef exec rubocop'
@@ -259,8 +259,8 @@ au FileType json set shiftwidth=2 tabstop=2  " JSON recommendation
 au FileType vim set shiftwidth=2 tabstop=2
 au FileType css set shiftwidth=2 tabstop=2
 
-au FileType text,markdown,html set textwidth=0
-au FileType html shiftwidth=2 tabstop=2
+au FileType text,markdown,html,htmldjango set textwidth=0
+au FileType html,htmldjango set shiftwidth=2 tabstop=2
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
