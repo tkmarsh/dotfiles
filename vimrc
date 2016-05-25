@@ -53,7 +53,7 @@ if isdirectory(vundlehome) && &loadplugins
   let g:syntastic_cpp_cpplint_exec = 'cpplint'
   let g:syntastic_cpp_checkers = ['cppcheck', 'cpplint']
   let g:syntastic_cpp_check_header = 1
-  let g:syntastic_python_checkers = ['flake8']
+  let g:syntastic_python_checkers = ['flake8', 'pylint']
   let g:syntastic_ruby_checkers = ['mri', 'rubocop']
   let g:syntastic_python_pylint_post_args = '--rcfile="`upfind .pylintrc | head`"'
   let g:syntastic_ruby_rubocop_exec = 'chef exec rubocop'
