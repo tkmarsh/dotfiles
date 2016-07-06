@@ -9,7 +9,8 @@
     whitespace = fix
 [user]
     name = Lee Skillen
-    email = lskillen@vulcanft.com
+    email = lskillen@cloudsmith.io
+	signingkey = 097A30DC
 [core]
     editor = vim
     whitespace = trailing-space, space-before-tab
@@ -37,3 +38,5 @@
     attachcopy = true
     attachcopyencoding = base64
 
+[commit]
+	gpgsign = true
