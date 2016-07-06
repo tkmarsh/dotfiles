@@ -135,8 +135,9 @@ if isdirectory(vundlehome) && &loadplugins
 
   augroup pencil
     autocmd!
-    autocmd FileType markdown,mkd call pencil#init()
-    autocmd FileType text         call pencil#init({'wrap': 'hard', 'autoformat': 0})
+    autocmd FileType markdown,mkd    call pencil#init()
+    autocmd FileType text            call pencil#init({'wrap': 'soft', 'autoformat': 1})
+    autocmd FileType html,htmldjango call pencil#init({'autoformat': 0})
   augroup END
 
   noremap <buffer> <silent> <F7> :<C-u>PFormatToggle<cr>
@@ -210,9 +211,12 @@ set wildmenu              " Enhanced command line completion
 
 " Customisations
 set completeopt+=preview
-set directory=/tmp/
-set nobackup
+let &directory=vimhome."/swap//"
+let &backupdir=vimhome."/backup//"
 set number                " Enable line numbers
+
+silent! call system('mkdir -p ' . &directory)
+silent! call system('mkdir -p ' . &backupdir)
 
 if has('unnamedplus')
   set clipboard=unnamedplus,unnamed
@@ -260,7 +264,7 @@ au FileType vim set shiftwidth=2 tabstop=2
 au FileType css set shiftwidth=2 tabstop=2
 
 au FileType text,markdown,html,htmldjango set textwidth=0
-au FileType html,htmldjango set shiftwidth=2 tabstop=2
+au FileType text,html,htmldjango set shiftwidth=2 tabstop=2 noautoindent nosmartindent
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
