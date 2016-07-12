@@ -120,6 +120,7 @@ export EDITOR=vim
 export VISUAL=vim
 export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
 export PYTHONDONTWRITEBYTECODE=1
+export SOLVE_TIMEOUT=300
 
 command -v pip &>/dev/null
 if [ $? -eq 0 ]; then
