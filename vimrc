@@ -259,12 +259,13 @@ au FileType eruby,ruby set re=1                    " Use older regex engine for 
 
 au FileType yaml set shiftwidth=2 tabstop=2  " YAML recommendation
 au FileType json set shiftwidth=2 tabstop=2  " JSON recommendation
+au FileType javascript set shiftwidth=2 tabstop=2  " YAML recommendation
 
 au FileType vim set shiftwidth=2 tabstop=2
 au FileType css set shiftwidth=2 tabstop=2
 
-au FileType text,markdown,html,htmldjango set textwidth=0
-au FileType text,html,htmldjango set shiftwidth=2 tabstop=2 noautoindent nosmartindent
+au FileType text,markdown,html,htmldjango set textwidth=0 shiftwidth=2 tabstop=2
+au FileType text,html,htmldjango set noautoindent nosmartindent
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
