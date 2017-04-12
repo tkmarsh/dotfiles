@@ -49,11 +49,11 @@ if isdirectory(vundlehome) && &loadplugins
   let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
   let g:syntastic_error_symbol = '✗'
   let g:syntastic_warning_symbol = '!'
-  let g:syntastic_enable_highlighting = 1
+  let g:syntastic_enable_highlighting = 0
   let g:syntastic_cpp_cpplint_exec = 'cpplint'
   let g:syntastic_cpp_checkers = ['cppcheck', 'cpplint']
   let g:syntastic_cpp_check_header = 1
-  let g:syntastic_python_checkers = ['flake8', 'pylint']
+  let g:syntastic_python_checkers = ['pyflakes']
   let g:syntastic_ruby_checkers = ['mri', 'rubocop']
   let g:syntastic_python_pylint_post_args = '--rcfile="`upfind .pylintrc | head`"'
   let g:syntastic_ruby_rubocop_exec = 'chef exec rubocop'
@@ -263,6 +263,7 @@ au FileType javascript set shiftwidth=2 tabstop=2  " YAML recommendation
 
 au FileType vim set shiftwidth=2 tabstop=2
 au FileType css set shiftwidth=2 tabstop=2
+au FileType scss set shiftwidth=2 tabstop=2
 
 au FileType text,markdown,html,htmldjango set textwidth=0 shiftwidth=2 tabstop=2
 au FileType text,html,htmldjango set noautoindent nosmartindent
