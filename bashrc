@@ -116,6 +116,7 @@ fi
 set -o vi
 
 test "$PATH" == *"$HOME/.bin"* || export PATH="$PATH:$HOME/.bin"
+test "$PATH" == *"$HOME/.chefdk/gem/ruby/2.3.0/bin"* || export PATH="$PATH:$HOME/.chefdk/gem/ruby/2.3.0/bin"
 export EDITOR=vim
 export VISUAL=vim
 export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
