@@ -8,8 +8,8 @@
 [apply]
     whitespace = fix
 [user]
-    name = Lee Skillen
-    email = lskillen@cloudsmith.io
+    name = Tom Marshall
+    email = tmarshall@cloudsmith.io
     signingkey = 097A30DC
 [core]
     editor = vim
@@ -31,7 +31,7 @@
     confirm = always
     smtpencryption = tls
     smtpserver = smtp.gmail.com
-    smtpuser = lskillen@cloudsmith.io
+    smtpuser = tmarshall@cloudsmith.io
     smtpserverport = 587
     smtpsslcertpath = /etc/ssl/certs/ca-bundle.trust.crt
     suppresscc = self
