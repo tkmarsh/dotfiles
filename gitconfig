@@ -10,7 +10,7 @@
 [user]
     name = Tom Marshall
     email = tmarshall@cloudsmith.io
-    signingkey = 097A30DC
+    signingkey = 3C962ABE
 [core]
     editor = vim
     whitespace = trailing-space, space-before-tab
