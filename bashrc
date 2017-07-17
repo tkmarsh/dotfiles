@@ -156,3 +156,6 @@ command -v direnv &>/dev/null && eval "$(direnv hook bash)"
 if [ -f "$HOME/.bashrc.local" ]; then
     source "$HOME/.bashrc.local"
 fi
+
+
+bind -m vi-insert "\C-l":clear-screen
